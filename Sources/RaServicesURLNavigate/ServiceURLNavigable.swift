@@ -51,7 +51,7 @@ extension ServiceURLNavigable {
     
     private static var routerProvider: ServiceRouterProvider {
         guard let routerProvider = createRouterProvider() as? ServiceRouterProvider else {
-            fatalError("You need to ensure that the object returned by `createRouterProvider(with:)` is of type `\(ServiceRouterProvider.self)`! Please check your code.")
+            fatalError("You need to ensure that the object returned by `createRouterProvider()` is of type `\(ServiceRouterProvider.self)`! Please check your code.")
         }
         return routerProvider
     }

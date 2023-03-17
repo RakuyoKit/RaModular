@@ -27,7 +27,7 @@ public protocol ServiceBehaviorProviding {
 public extension ServiceBehaviorProviding {
     static var behaviorProvider: BehaviorProvider {
         guard let provider = createBehaviorProvider() as? BehaviorProvider else {
-            fatalError("You need to ensure that the object returned by `createBehaviorProvider(with:)` is of type `\(BehaviorProvider.self)`! Please check your code.")
+            fatalError("You need to ensure that the object returned by `createBehaviorProvider()` is of type `\(BehaviorProvider.self)`! Please check your code.")
         }
         return provider
     }
