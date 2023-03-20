@@ -11,27 +11,25 @@ import Foundation
 import RaServicesCore
 
 public class RouterMapFactory {
+    public typealias Factory = (_ userInfo: Parameters) -> Any?
+    
     typealias Router = ServiceRouter
     
-    public typealias Factory = (_ userInfo: Parameters) -> Any?
+    private typealias Key = Router.Base
     
     static let shared = RouterMapFactory()
     
-    private lazy var cache: [Router: Factory] = [:]
+    private init() { }
+    
+    private lazy var cache: [Key: Factory] = [:]
 }
 
 extension RouterMapFactory {
     func cache(router: Router, with factory: @escaping Factory) {
-        
-        #warning("TODO Here, the parameters in the URL should be discarded, and only the part before the parameters should be retained as the key.")
-        
-        cache[router] = factory
+        cache[router.base] = factory
     }
     
     func factory(of router: Router) -> Factory? {
-        
-        #warning("TODO Here, the parameters in the URL should be discarded, and only the part before the parameters should be retained as the key.")
-        
-        return cache[router]
+        return cache[router.base]
     }
 }

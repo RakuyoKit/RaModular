@@ -8,15 +8,51 @@
 
 import Foundation
 
+///
 public struct ServiceRouter {
-    public let url: URL?
+    ///
+    public let urlComponents: URLComponents?
     
-    public init(router: URL?) {
-        self.url = router
+    public init(url: URL?) {
+        self.init(string: url?.absoluteString ?? "")
     }
     
-    public init(router: String) {
-        self.url = .init(string: router)
+    public init(string: String) {
+        self.urlComponents = .init(string: string)
+    }
+}
+
+// MARK: - Base
+
+public extension ServiceRouter {
+    typealias Base = String
+    
+    var base: Base {
+        scheme + "://" + host + (port.map { ":\($0)" } ?? "") + "/"
+    }
+}
+
+// MARK: - URL Components
+
+public extension ServiceRouter {
+    var scheme: String {
+        urlComponents?.scheme ?? ""
+    }
+    
+    var host: String {
+        urlComponents?.host ?? ""
+    }
+    
+    var port: Int? {
+        urlComponents?.port
+    }
+    
+    var path: String {
+        urlComponents?.path ?? ""
+    }
+    
+    var query: [URLQueryItem] {
+        urlComponents?.queryItems ?? []
     }
 }
 
@@ -24,10 +60,16 @@ public struct ServiceRouter {
 
 extension ServiceRouter: Hashable { }
 
+// MARK: - CustomStringConvertible
+
+extension ServiceRouter: CustomStringConvertible {
+    public var description: String { urlComponents?.string ?? "nil" }
+}
+
 // MARK: - ExpressibleByStringLiteral
 
 extension ServiceRouter: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
-        self.init(router: value)
+        self.init(string: value)
     }
 }

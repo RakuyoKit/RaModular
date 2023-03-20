@@ -25,11 +25,19 @@ public enum Router {
         method: NavigationMethod,
         completion: VoidClosure?
     ) {
-        #warning("TODO There should be a custom log method here.")
-        
         guard let factory = RouterMapFactory.shared.factory(of: router) else {
             print("❌ No corresponding factory found.")
             return
+        }
+        
+        // Extracting the parameters from the URL and putting them into the `userInfo` dictionary.
+        var userInfo = userInfo
+        for query in router.query {
+            // Add `url_` prefix to avoid conflict with original parameters
+            //
+            // This implementation is temporary, and the prefix may be removed in the future.
+            // Depends on the feedback after the release.
+            userInfo["url_\(query.name)"] = query.value
         }
         
         guard let controller = factory(userInfo) as? UIViewController else {
