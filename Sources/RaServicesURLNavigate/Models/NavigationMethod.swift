@@ -30,7 +30,8 @@ public extension Navigation {
 // MARK: - Default
 
 public extension Navigation.Method {
-    ///
+    /// The default navigation mode.
+    /// You can set a default navigation mode that fits your business needs by modifying this property at runtime.
     static var `default`: Self = .show(sender: nil)
 }
 

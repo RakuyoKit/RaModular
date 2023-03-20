@@ -8,5 +8,5 @@
 
 import Foundation
 
-///
+/// Serves as a namespace for some types within the module.
 public enum Navigation { }

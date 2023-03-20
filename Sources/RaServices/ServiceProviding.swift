@@ -11,8 +11,10 @@ import Foundation
 import RaServicesBehavior
 import RaServicesURLNavigate
 
+/// A collection of ServiceBehaviorProviding and ServiceNavigationProviding that
+/// simplifies the process when using both protocols simultaneously.
 public protocol ServiceProviding: ServiceBehaviorProviding & ServiceNavigationProviding {
-    ///
+    /// Creating a service provider instance.
     static func createProvider() -> Any
 }
 

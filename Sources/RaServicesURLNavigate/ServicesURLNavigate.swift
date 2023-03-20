@@ -32,7 +32,7 @@ public extension ServicesURLNavigate {
         completion: VoidClosure? = nil
     ) {
         guard let actionBlock = NavigationFactory.shared.value(of: url) else {
-            print("❌ No corresponding factory found.")
+            print("❌ No route table found for the given URL! Please check if the URL is registered. url: \(url)")
             return
         }
         
@@ -47,7 +47,7 @@ public extension ServicesURLNavigate {
         }
         
         guard let controller = actionBlock(userInfo) as? UIViewController else {
-            print("❌ Requesting the show factory to return a subclass of UIViewController")
+            print("❌ The behavior event should return a `UIViewController` object or its subclass! Please check your code.")
             return
         }
         

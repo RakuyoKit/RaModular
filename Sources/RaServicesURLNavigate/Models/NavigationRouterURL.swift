@@ -8,12 +8,12 @@
 
 import Foundation
 
+/// The route URL, which can be understood as the identifier of the route event.
 public typealias NavigationRouterURL = Navigation.RouterURL
 
 extension Navigation {
-    ///
+    /// The route URL, which can be understood as the identifier of the route event.
     public struct RouterURL {
-        ///
         public let urlComponents: URLComponents?
         
         public init(url: Foundation.URL?) {
@@ -31,6 +31,7 @@ extension Navigation {
 public extension Navigation.RouterURL {
     typealias CacheKey = String
     
+    /// Key of the route table.
     var cacheKey: CacheKey {
         scheme + "://" + host + (port.map { ":\($0)" } ?? "") + "/" + path + "/"
     }

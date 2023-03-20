@@ -65,7 +65,10 @@ public extension ServiceNavigationProviding {
 // MARK: -
 
 public extension ServiceNavigationProviding {
+    /// Register the route event.
     ///
+    /// You need to call this method to register the route event before invoking the route,
+    /// otherwise the route event will not respond.
     static func register() {
         let provider = routerProviderType
         Navigation.register(provider.router, with: provider.action)
