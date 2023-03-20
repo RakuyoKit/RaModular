@@ -8,11 +8,12 @@
 
 import Foundation
 
-public typealias NavigationMethod = Navigation.Method
+/// Method used for navigating between view controllers.
+public typealias NavigationMode = Navigation.Mode
 
 public extension Navigation {
     /// Method used for navigating between view controllers.
-    public enum Method {
+    public enum Mode {
         // `show(_:, sender:)`
         case show(sender: Any? = nil)
         
@@ -20,16 +21,16 @@ public extension Navigation {
         case showDetail(sender: Any? = nil)
         
         // `pushViewController(_:, animated:)`
-        case push(animated: Bool = true)
+        case push
         
         // `present(_:, animated:, completion:)`
-        case present(animated: Bool = true)
+        case present
     }
 }
 
 // MARK: - Default
 
-public extension Navigation.Method {
+public extension Navigation.Mode {
     /// The default navigation mode.
     /// You can set a default navigation mode that fits your business needs by modifying this property at runtime.
     static var `default`: Self = .show(sender: nil)
@@ -37,10 +38,14 @@ public extension Navigation.Method {
 
 // MARK: - MethodType
 
-public extension Navigation.Method {
-    typealias MethodType = String
+public extension Navigation.Mode {
+    typealias Identifier = String
     
-    var methodType: MethodType {
+    /// Identifier for the navigation mode,
+    /// which allows configuring the navigation mode through a string.
+    ///
+    /// see `init?(methodMode:, animated:, sender:)`
+    var identifier: Identifier {
         switch self {
         case .show: return "show"
         case .showDetail: return "showDetail"
@@ -52,20 +57,27 @@ public extension Navigation.Method {
 
 // MARK: - Init with components
 
-public extension Navigation.Method {
-    init?(methodType: MethodType, animated: Bool? = nil, sender: Any? = nil) {
-        switch methodType {
-        case Self.show().methodType:
+public extension Navigation.Mode {
+    /// Initialize a `Navigation.Mode` object with a series of component parameters.
+    ///
+    /// When the `identifier` parameter fails to match, the method will return `nil`.
+    ///
+    /// - Parameters:
+    ///   - identifier: Navigation mode identifier, see `identifier` property for details.
+    ///   - sender:
+    init?(identifier: Identifier, sender: Any? = nil) {
+        switch identifier {
+        case Self.show().identifier:
             self = .show(sender: sender)
             
-        case Self.showDetail().methodType:
+        case Self.showDetail().identifier:
             self = .showDetail(sender: sender)
             
-        case Self.push().methodType:
-            self = .push(animated: animated ?? true)
+        case Self.push.identifier:
+            self = .push
             
-        case Self.present().methodType:
-            self = .present(animated: animated ?? true)
+        case Self.present.identifier:
+            self = .present
             
         default:
             return nil

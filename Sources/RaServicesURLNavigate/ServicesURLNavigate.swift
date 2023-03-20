@@ -15,23 +15,24 @@ public protocol ServicesURLNavigate {
     static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction)
     
     ///
-    static func open(_ url: NavigationRouterURL, with userInfo: Parameters, method: NavigationMethod, completion: VoidClosure?)
+    static func open(_ url: NavigationRouterURL, with userInfo: Parameters, mode: NavigationMode?, animated: Bool?, completion: VoidClosure?)
 }
 
 // MARK: - Default
 
 public extension ServicesURLNavigate {
     static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction) {
-        NavigationFactory.shared.cache(action, to: url)
+        NavigationTable.shared.save(action, to: url)
     }
     
     static func open(
         _ url: NavigationRouterURL,
         with userInfo: Parameters = [:],
-        method: NavigationMethod = .default,
+        mode: NavigationMode? = nil,
+        animated: Bool? = nil,
         completion: VoidClosure? = nil
     ) {
-        guard let actionBlock = NavigationFactory.shared.value(of: url) else {
+        guard let actionBlock = NavigationTable.shared.value(of: url) else {
             print("❌ No route table found for the given URL! Please check if the URL is registered. url: \(url)")
             return
         }
@@ -56,26 +57,62 @@ public extension ServicesURLNavigate {
             return
         }
         
+        func getMode() -> NavigationMode? {
+            let value = userInfo[PredefinedKey.Navigation.modeType] as? NavigationMode.Identifier
+            return value.flatMap { NavigationMode(identifier: $0, sender: userInfo[PredefinedKey.Navigation.sender]) }
+        }
+        let _mode = mode ?? getMode() ?? .default
+        
+        func getAnimated() -> Bool? {
+            let value = userInfo[PredefinedKey.Navigation.animation]
+            return value as? Bool
+        }
+        let _animated = animated ?? getAnimated() ?? true
+        
         func _setCompletion() {
-            setCompletion(completion, with: topVisibleViewController.transitionCoordinator)
+            setCompletion(completion, with: topVisibleViewController.transitionCoordinator, animated: _animated)
         }
         
-        switch method {
-        case .show(let sender):
-            topVisibleViewController.show(controller, sender: sender)
+        func _navigate(action: VoidClosure) {
+            if _animated {
+                action()
+            } else {
+                UIView.performWithoutAnimation(action)
+            }
             _setCompletion()
+        }
+        
+        switch _mode {
+        case .show(let sender):
+            _navigate {
+                topVisibleViewController.show(controller, sender: sender)
+            }
             
         case .showDetail(let sender):
-            topVisibleViewController.showDetailViewController(controller, sender: sender)
+            _navigate {
+                topVisibleViewController.showDetailViewController(controller, sender: sender)
+            }
+            
+        case .push:
+            topVisibleViewController.navigationController?.pushViewController(controller, animated: _animated)
             _setCompletion()
             
-        case .push(let animated):
-            topVisibleViewController.navigationController?.pushViewController(controller, animated: animated)
-            _setCompletion()
-            
-        case .present(let animated):
-            topVisibleViewController.present(controller, animated: animated, completion: completion)
+        case .present:
+            topVisibleViewController.present(controller, animated: _animated, completion: completion)
         }
+    }
+}
+
+public extension PredefinedKey {
+    enum Navigation {
+        ///
+        static let modeType = "ra_navigation_mode_type"
+        
+        ///
+        static let sender = "ra_navigation_sender"
+        
+        ///
+        static let animation = "ra_navigation_animation"
     }
 }
 
@@ -84,9 +121,10 @@ public extension ServicesURLNavigate {
 private extension ServicesURLNavigate {
     static func setCompletion(
         _ completion: VoidClosure?,
-        with transitionCoordinator: UIViewControllerTransitionCoordinator?
+        with transitionCoordinator: UIViewControllerTransitionCoordinator?,
+        animated: Bool
     ) {
-        guard let coordinator = transitionCoordinator else {
+        guard animated, let coordinator = transitionCoordinator else {
             DispatchQueue.main.async { completion?() }
             return
         }

@@ -1,5 +1,5 @@
 //
-//  ServicePredefinedKey.swift
+//  PredefinedKey.swift
 //  RaServices
 //
 //  Created by Rakuyo on 2023/03/20.
@@ -8,5 +8,5 @@
 
 import Foundation
 
-///
-public enum ServicePredefinedKey { }
+/// Used to manage the pre-defined Key values in RaServices.
+public enum PredefinedKey { }

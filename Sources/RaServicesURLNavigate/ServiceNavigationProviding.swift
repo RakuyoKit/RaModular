@@ -12,53 +12,24 @@ import RaServicesCore
 
 ///
 public protocol ServiceNavigationProviding {
-    typealias Method = NavigationMethod
-    
     ///
     static func createNavigationProvider() -> Any
     
     ///
-    static func open(with userInfo: Parameters, completion: VoidClosure?)
-    
-    ///
-    static func open(by method: Method, userInfo: Parameters, completion: VoidClosure?)
+    static func open(with userInfo: Parameters, mode: NavigationMode?, animated: Bool?, completion: VoidClosure?)
 }
 
 // MARK: - Default
 
 public extension ServiceNavigationProviding {
-    typealias PredefinedKey = ServicePredefinedKey.Navigation
-    
-    static func open(with userInfo: Parameters, completion: VoidClosure? = nil) {
-        guard let methodOfUserInfo = userInfo[PredefinedKey.method] else {
-            print("❌ No navigation method is specified, this navigation will be ignored. userInfo: \(userInfo)")
-            return
-        }
-        
-        func _open(by method: Method?) {
-            if method == nil {
-                print("❌ Invalid navigation method! This navigation will use the default method to open the target page. userInfo: \(userInfo)")
-            }
-            
-            let _method = method ?? .default
-            open(by: _method, userInfo: userInfo, completion: completion)
-        }
-        
-        if let methodType = methodOfUserInfo as? Method.MethodType {
-            let animation = userInfo[PredefinedKey.animation] as? Bool
-            let sender = userInfo[PredefinedKey.sender]
-            
-            let method = Method(methodType: methodType, animated: animation, sender: sender)
-            _open(by: method)
-            
-        } else {
-            _open(by: methodOfUserInfo as? Method)
-        }
-    }
-    
-    static func open(by method: Method = .default, userInfo: Parameters = [:], completion: VoidClosure? = nil) {
+    static func open(
+        with userInfo: Parameters = [:],
+        mode: NavigationMode? = nil,
+        animated: Bool? = nil,
+        completion: VoidClosure? = nil
+    ) {
         let url = routerProviderType.router
-        Navigation.open(url, with: userInfo, method: method, completion: completion)
+        Navigation.open(url, with: userInfo, mode: mode, animated: animated, completion: completion)
     }
 }
 
@@ -72,19 +43,6 @@ public extension ServiceNavigationProviding {
     static func register() {
         let provider = routerProviderType
         Navigation.register(provider.router, with: provider.action)
-    }
-}
-
-public extension ServicePredefinedKey {
-    enum Navigation {
-        ///
-        static let method = "ra_navigation_method"
-        
-        ///
-        static let sender = "ra_navigation_sender"
-        
-        ///
-        static let animation = "ra_navigation_animation"
     }
 }
 
