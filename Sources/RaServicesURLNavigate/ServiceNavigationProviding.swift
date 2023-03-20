@@ -36,11 +36,12 @@ public extension ServiceNavigationProviding {
         }
         
         func _open(by method: Method?) {
-            guard let method = method else {
-                print("❌ Invalid navigation method! This navigation will be ignored. userInfo: \(userInfo)")
-                return
+            if method == nil {
+                print("❌ Invalid navigation method! This navigation will use the default method to open the target page. userInfo: \(userInfo)")
             }
-            open(by: method, userInfo: userInfo, completion: completion)
+            
+            let _method = method ?? .default
+            open(by: _method, userInfo: userInfo, completion: completion)
         }
         
         if let methodType = methodOfUserInfo as? Method.MethodType {
@@ -55,7 +56,7 @@ public extension ServiceNavigationProviding {
         }
     }
     
-    static func open(by method: Method, userInfo: Parameters = [:], completion: VoidClosure? = nil) {
+    static func open(by method: Method = .default, userInfo: Parameters = [:], completion: VoidClosure? = nil) {
         let url = routerProviderType.router
         Navigation.open(url, with: userInfo, method: method, completion: completion)
     }

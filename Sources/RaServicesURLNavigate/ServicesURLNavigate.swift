@@ -27,9 +27,9 @@ public extension ServicesURLNavigate {
     
     static func open(
         _ url: NavigationRouterURL,
-        with userInfo: Parameters,
-        method: NavigationMethod,
-        completion: VoidClosure?
+        with userInfo: Parameters = [:],
+        method: NavigationMethod = .default,
+        completion: VoidClosure? = nil
     ) {
         guard let actionBlock = NavigationFactory.shared.value(of: url) else {
             print("❌ No corresponding factory found.")

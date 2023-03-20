@@ -22,7 +22,9 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        OrderService.open(by: .push()) {
+        NavigationMethod.default = .present()
+        
+        OrderService.open {
             print("after viewDidAppear")
         }
     }

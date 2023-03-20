@@ -27,6 +27,13 @@ public extension Navigation {
     }
 }
 
+// MARK: - Default
+
+public extension Navigation.Method {
+    ///
+    static var `default`: Self = .show(sender: nil)
+}
+
 // MARK: - MethodType
 
 public extension Navigation.Method {
