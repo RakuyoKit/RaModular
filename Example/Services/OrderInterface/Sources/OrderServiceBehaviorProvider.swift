@@ -7,4 +7,6 @@
 
 import Foundation
 
-public struct OrderServiceProvider { }
+public protocol OrderServiceBehaviorProvider {
+    func updateLocalOrderCache() -> Bool
+}

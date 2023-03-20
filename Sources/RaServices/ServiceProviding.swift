@@ -11,13 +11,7 @@ import Foundation
 import RaServicesBehavior
 import RaServicesURLNavigate
 
-public protocol ServiceProviding: ServiceBehaviorProviding & ServiceURLNavigable {
-    /// Actual provider.
-    associatedtype Provider
-    
-    ///
-    associatedtype BehaviorProvider = Provider
-    
+public protocol ServiceProviding: ServiceBehaviorProviding & ServiceNavigationProviding {
     ///
     static func createProvider() -> Any
 }
@@ -30,10 +24,10 @@ public extension ServiceProviding {
     }
 }
 
-// MARK: - ServiceURLNavigable Default Provider
+// MARK: - ServiceNavigationProviding Default Provider
 
 public extension ServiceProviding {
-    static func createRouterProvider() -> Any {
+    static func createNavigationProvider() -> Any {
         return createProvider()
     }
 }

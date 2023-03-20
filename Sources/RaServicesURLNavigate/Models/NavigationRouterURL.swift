@@ -1,5 +1,5 @@
 //
-//  ServiceURLNavigable.swift
+//  NavigationRouterURL.swift
 //  RaServices
 //
 //  Created by Rakuyo on 2023/03/17.
@@ -8,33 +8,37 @@
 
 import Foundation
 
-///
-public struct ServiceRouter {
+public typealias NavigationRouterURL = Navigation.RouterURL
+
+extension Navigation {
     ///
-    public let urlComponents: URLComponents?
-    
-    public init(url: URL?) {
-        self.init(string: url?.absoluteString ?? "")
-    }
-    
-    public init(string: String) {
-        self.urlComponents = .init(string: string)
+    public struct RouterURL {
+        ///
+        public let urlComponents: URLComponents?
+        
+        public init(url: Foundation.URL?) {
+            self.init(string: url?.absoluteString ?? "")
+        }
+        
+        public init(string: String) {
+            self.urlComponents = .init(string: string)
+        }
     }
 }
 
-// MARK: - Key
+// MARK: - CacheKey
 
-public extension ServiceRouter {
-    typealias Key = String
+public extension Navigation.RouterURL {
+    typealias CacheKey = String
     
-    var key: Key {
+    var cacheKey: CacheKey {
         scheme + "://" + host + (port.map { ":\($0)" } ?? "") + "/" + path + "/"
     }
 }
 
 // MARK: - URL Components
 
-public extension ServiceRouter {
+public extension Navigation.RouterURL {
     var scheme: String {
         urlComponents?.scheme ?? ""
     }
@@ -58,17 +62,17 @@ public extension ServiceRouter {
 
 // MARK: - Hashable
 
-extension ServiceRouter: Hashable { }
+extension Navigation.RouterURL: Hashable { }
 
 // MARK: - CustomStringConvertible
 
-extension ServiceRouter: CustomStringConvertible {
+extension Navigation.RouterURL: CustomStringConvertible {
     public var description: String { urlComponents?.string ?? "nil" }
 }
 
 // MARK: - ExpressibleByStringLiteral
 
-extension ServiceRouter: ExpressibleByStringLiteral {
+extension Navigation.RouterURL: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(string: value)
     }

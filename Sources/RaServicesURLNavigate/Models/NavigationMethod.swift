@@ -8,24 +8,28 @@
 
 import Foundation
 
-/// Method used for navigating between view controllers.
-public enum NavigationMethod {
-    // `show(_:, sender:)`
-    case show(sender: Any? = nil)
-    
-    // `showDetailViewController(_:, sender:)`
-    case showDetail(sender: Any? = nil)
-    
-    // `pushViewController(_:, animated:)`
-    case push(animated: Bool = true)
-    
-    // `present(_:, animated:, completion:)`
-    case present(animated: Bool = true)
+public typealias NavigationMethod = Navigation.Method
+
+public extension Navigation {
+    /// Method used for navigating between view controllers.
+    public enum Method {
+        // `show(_:, sender:)`
+        case show(sender: Any? = nil)
+        
+        // `showDetailViewController(_:, sender:)`
+        case showDetail(sender: Any? = nil)
+        
+        // `pushViewController(_:, animated:)`
+        case push(animated: Bool = true)
+        
+        // `present(_:, animated:, completion:)`
+        case present(animated: Bool = true)
+    }
 }
 
 // MARK: - MethodType
 
-public extension NavigationMethod {
+public extension Navigation.Method {
     typealias MethodType = String
     
     var methodType: MethodType {
@@ -40,7 +44,7 @@ public extension NavigationMethod {
 
 // MARK: - Init with components
 
-public extension NavigationMethod {
+public extension Navigation.Method {
     init?(methodType: MethodType, animated: Bool? = nil, sender: Any? = nil) {
         switch methodType {
         case Self.show().methodType:

@@ -16,13 +16,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        OrderServiceEntrance.behaviorProvider.updateLocalOrderCache()
+        OrderService.behaviorProvider.updateLocalOrderCache()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        OrderServiceEntrance.open(by: .present())
+        OrderService.open(by: .present())
     }
 }
 

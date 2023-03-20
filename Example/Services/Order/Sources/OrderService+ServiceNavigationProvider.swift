@@ -1,5 +1,5 @@
 //
-//  OrderService+ServiceRouterProvider.swift
+//  OrderServiceProvider+ServiceNavigationProvider.swift
 //  Order
 //
 //  Created by Rakuyo on 2023/3/20.
@@ -11,12 +11,12 @@ import OrderInterface
 import RaServicesCore
 import RaServicesURLNavigate
 
-extension OrderService: ServiceRouterProvider {
-    public static var router: ServiceRouter {
+extension OrderServiceProvider: ServiceNavigationProvider {
+    public static var router: NavigationRouterURL {
         "https://www.rakuyoo.com/order"
     }
     
-    public static var factory: Router.Factory {
+    public static var action: NavigationAction {
         { _ in
             print("hhhhh")
             

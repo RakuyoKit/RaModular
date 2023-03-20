@@ -7,6 +7,12 @@
 
 import Foundation
 
-public struct OrderService {
-    public init() { }
+import RaServices
+
+public struct OrderService: ServiceProviding {
+    public typealias BehaviorProvider = OrderServiceBehaviorProvider
+    
+    public static func createProvider() -> Any {
+        return OrderServiceProvider()
+    }
 }

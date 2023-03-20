@@ -1,38 +1,44 @@
 //
-//  Router.swift
+//  ServicesURLNavigate.swift
 //  RaServices
 //
 //  Created by Rakuyo on 2023/03/17.
 //  Copyright © 2023 Rakuyo. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 import RaServicesCore
 
-///
-public enum Router {
+public protocol ServicesURLNavigate {
+    ///
+    static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction)
     
-    public typealias Factory = RouterMapFactory.Factory
-    
-    static func register(_ router: ServiceRouter, with factory: @escaping Factory) {
-        RouterMapFactory.shared.cache(router: router, with: factory)
+    ///
+    static func open(_ url: NavigationRouterURL, with userInfo: Parameters, method: NavigationMethod, completion: VoidClosure?)
+}
+
+// MARK: - Default
+
+public extension ServicesURLNavigate {
+    static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction) {
+        NavigationFactory.shared.cache(action, to: url)
     }
     
     static func open(
-        _ router: ServiceRouter,
+        _ url: NavigationRouterURL,
         with userInfo: Parameters,
         method: NavigationMethod,
         completion: VoidClosure?
     ) {
-        guard let factory = RouterMapFactory.shared.factory(of: router) else {
+        guard let actionBlock = NavigationFactory.shared.value(of: url) else {
             print("❌ No corresponding factory found.")
             return
         }
         
         // Extracting the parameters from the URL and putting them into the `userInfo` dictionary.
         var userInfo = userInfo
-        for query in router.query {
+        for query in url.query {
             // Add `url_` prefix to avoid conflict with original parameters
             //
             // This implementation is temporary, and the prefix may be removed in the future.
@@ -40,7 +46,7 @@ public enum Router {
             userInfo["url_\(query.name)"] = query.value
         }
         
-        guard let controller = factory(userInfo) as? UIViewController else {
+        guard let controller = actionBlock(userInfo) as? UIViewController else {
             print("❌ Requesting the show factory to return a subclass of UIViewController")
             return
         }
@@ -72,7 +78,9 @@ public enum Router {
     }
 }
 
-private extension Router {
+// MARK: - Private
+
+private extension ServicesURLNavigate {
     static func navigate(withCompletion completion: VoidClosure?, action: VoidClosure) {
         CATransaction.setCompletionBlock(completion)
         CATransaction.begin()
