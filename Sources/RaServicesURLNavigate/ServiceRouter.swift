@@ -28,7 +28,7 @@ public extension ServiceRouter {
     typealias Base = String
     
     var base: Base {
-        scheme + "://" + host + (port.map { ":\($0)" } ?? "") + "/"
+        scheme + "://" + host + (port.map { ":\($0)" } ?? "") + "/" + path + "/"
     }
 }
 
