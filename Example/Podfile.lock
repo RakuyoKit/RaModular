@@ -1,0 +1,48 @@
+PODS:
+  - Order (0.1.0):
+    - OrderInterface (= 0.1.0)
+  - OrderInterface (0.1.0):
+    - RaServices (= 0.1.0)
+  - RaServices (0.1.0):
+    - RaServicesBehavior (= 0.1.0)
+    - RaServicesCore (= 0.1.0)
+    - RaServicesURLNavigate (= 0.1.0)
+  - RaServicesBehavior (0.1.0):
+    - RaServicesCore (= 0.1.0)
+  - RaServicesCore (0.1.0)
+  - RaServicesURLNavigate (0.1.0):
+    - RaServicesCore (= 0.1.0)
+
+DEPENDENCIES:
+  - Order (from `./Services/Order`)
+  - OrderInterface (from `./Services/OrderInterface`)
+  - RaServices (from `../`)
+  - RaServicesBehavior (from `../`)
+  - RaServicesCore (from `../`)
+  - RaServicesURLNavigate (from `../`)
+
+EXTERNAL SOURCES:
+  Order:
+    :path: "./Services/Order"
+  OrderInterface:
+    :path: "./Services/OrderInterface"
+  RaServices:
+    :path: "../"
+  RaServicesBehavior:
+    :path: "../"
+  RaServicesCore:
+    :path: "../"
+  RaServicesURLNavigate:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Order: 8f7f4a4a475eeefb62c9eb61a107c5414b96ab6b
+  OrderInterface: c50d508e47504ab5edab323a4254a79da77b581e
+  RaServices: 24550e12ef7fdeec385438403fa28b5083094195
+  RaServicesBehavior: 767fdf8e5df3f66be7768b532e60018f53d8fc72
+  RaServicesCore: 0728f4332c37d7532e05c798001a834f6bad40d1
+  RaServicesURLNavigate: 5176c5de989e7859c4004d1371d0f71a5822209e
+
+PODFILE CHECKSUM: 892bb0672b7828a40d1f404117153fee0b741a17
+
+COCOAPODS: 1.11.3

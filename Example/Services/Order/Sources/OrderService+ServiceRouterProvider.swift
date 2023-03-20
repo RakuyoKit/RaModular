@@ -1,14 +1,15 @@
 //
-//  File.swift
-//  
+//  OrderService+ServiceRouterProvider.swift
+//  Order
 //
 //  Created by Rakuyo on 2023/3/20.
 //
 
 import UIKit
 
-@testable import RaServicesCore
-@testable import RaServicesURLNavigate
+import OrderInterface
+import RaServicesCore
+import RaServicesURLNavigate
 
 extension OrderService: ServiceRouterProvider {
     public static var router: ServiceRouter {
@@ -19,7 +20,10 @@ extension OrderService: ServiceRouterProvider {
         { _ in
             print("hhhhh")
             
-            return UIViewController()
+            let vc = UIViewController()
+            vc.view.backgroundColor = .red
+            
+            return vc
         }
     }
 }
