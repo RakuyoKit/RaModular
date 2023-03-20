@@ -56,21 +56,22 @@ public extension ServicesURLNavigate {
             return
         }
         
+        func _setCompletion() {
+            setCompletion(completion, with: topVisibleViewController.transitionCoordinator)
+        }
+        
         switch method {
         case .show(let sender):
-            navigate(withCompletion: completion) {
-                topVisibleViewController.show(controller, sender: sender)
-            }
+            topVisibleViewController.show(controller, sender: sender)
+            _setCompletion()
             
         case .showDetail(let sender):
-            navigate(withCompletion: completion) {
-                topVisibleViewController.showDetailViewController(controller, sender: sender)
-            }
+            topVisibleViewController.showDetailViewController(controller, sender: sender)
+            _setCompletion()
             
         case .push(let animated):
-            navigate(withCompletion: completion) {
-                topVisibleViewController.navigationController?.pushViewController(controller, animated: animated)
-            }
+            topVisibleViewController.navigationController?.pushViewController(controller, animated: animated)
+            _setCompletion()
             
         case .present(let animated):
             topVisibleViewController.present(controller, animated: animated, completion: completion)
@@ -81,10 +82,14 @@ public extension ServicesURLNavigate {
 // MARK: - Private
 
 private extension ServicesURLNavigate {
-    static func navigate(withCompletion completion: VoidClosure?, action: VoidClosure) {
-        CATransaction.setCompletionBlock(completion)
-        CATransaction.begin()
-        action()
-        CATransaction.commit()
+    static func setCompletion(
+        _ completion: VoidClosure?,
+        with transitionCoordinator: UIViewControllerTransitionCoordinator?
+    ) {
+        guard let coordinator = transitionCoordinator else {
+            DispatchQueue.main.async { completion?() }
+            return
+        }
+        coordinator.animate(alongsideTransition: nil) { _ in completion?() }
     }
 }

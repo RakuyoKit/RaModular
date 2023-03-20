@@ -19,11 +19,7 @@ extension OrderServiceProvider: ServiceNavigationProvider {
     public static var action: NavigationAction {
         { _ in
             print("hhhhh")
-            
-            let vc = UIViewController()
-            vc.view.backgroundColor = .red
-            
-            return vc
+            return OrderListViewController()
         }
     }
 }
