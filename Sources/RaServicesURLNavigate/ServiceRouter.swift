@@ -22,12 +22,12 @@ public struct ServiceRouter {
     }
 }
 
-// MARK: - Base
+// MARK: - Key
 
 public extension ServiceRouter {
-    typealias Base = String
+    typealias Key = String
     
-    var base: Base {
+    var key: Key {
         scheme + "://" + host + (port.map { ":\($0)" } ?? "") + "/" + path + "/"
     }
 }

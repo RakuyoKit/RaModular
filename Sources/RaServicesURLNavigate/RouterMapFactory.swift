@@ -15,7 +15,7 @@ public class RouterMapFactory {
     
     typealias Router = ServiceRouter
     
-    private typealias Key = Router.Base
+    private typealias Key = Router.Key
     
     static let shared = RouterMapFactory()
     
@@ -26,10 +26,10 @@ public class RouterMapFactory {
 
 extension RouterMapFactory {
     func cache(router: Router, with factory: @escaping Factory) {
-        cache[router.base] = factory
+        cache[router.key] = factory
     }
     
     func factory(of router: Router) -> Factory? {
-        return cache[router.base]
+        return cache[router.key]
     }
 }
