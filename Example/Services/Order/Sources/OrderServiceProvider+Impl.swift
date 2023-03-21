@@ -1,8 +1,8 @@
 //
-//  OrderServiceProvider+ServiceNavigationProvider.swift
+//  OrderServiceProvider+Impl.swift
 //  Order
 //
-//  Created by Rakuyo on 2023/3/20.
+//  Created by Rakuyo on 2023/03/21.
 //
 
 import UIKit
@@ -10,6 +10,8 @@ import UIKit
 import OrderInterface
 import RaServicesCore
 import RaServicesURLNavigate
+
+// MARK: - ServiceNavigationProvider
 
 extension OrderServiceProvider: ServiceNavigationProvider {
     public static var router: NavigationRouterURL {
@@ -21,5 +23,14 @@ extension OrderServiceProvider: ServiceNavigationProvider {
             print("hhhhh")
             return OrderListViewController()
         }
+    }
+}
+
+// MARK: - OrderServiceBehaviorProvider
+
+extension OrderServiceProvider: OrderServiceBehaviorProvider {
+    public func updateLocalOrderCache() -> Bool {
+        print(#function)
+        return true
     }
 }
