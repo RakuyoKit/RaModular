@@ -57,27 +57,18 @@ public extension ServicesURLNavigate {
             return
         }
         
-        func getMode() -> NavigationMode? {
-            let value = userInfo[PredefinedKey.Navigation.modeType] as? NavigationMode.Identifier
-            return value.flatMap { NavigationMode(identifier: $0, sender: userInfo[PredefinedKey.Navigation.sender]) }
-        }
-        let _mode = mode ?? getMode() ?? .default
+        let _mode = mode ?? getMode(from: userInfo) ?? .default
+        let _animated = animated ?? getAnimated(from: userInfo) ?? true
         
-        func getAnimated() -> Bool? {
-            let value = userInfo[PredefinedKey.Navigation.animation]
-            return value as? Bool
-        }
-        let _animated = animated ?? getAnimated() ?? true
-        
-        func _setCompletion() {
+        lazy var _setCompletion = {
             setCompletion(completion, with: topVisibleViewController.transitionCoordinator, animated: _animated)
         }
         
-        func _navigate(action: VoidClosure) {
+        lazy var _navigate: (_ action: VoidClosure) -> Void = {
             if _animated {
-                action()
+                $0()
             } else {
-                UIView.performWithoutAnimation(action)
+                UIView.performWithoutAnimation($0)
             }
             _setCompletion()
         }
@@ -119,6 +110,20 @@ public extension PredefinedKey {
 // MARK: - Private
 
 private extension ServicesURLNavigate {
+    static var navigationKey: PredefinedKey.Navigation.Type {
+        PredefinedKey.Navigation.self
+    }
+    
+    static func getMode(from userInfo: Parameters) -> NavigationMode? {
+        let value = userInfo[navigationKey.modeType] as? NavigationMode.Identifier
+        return value.flatMap { NavigationMode(identifier: $0, sender: userInfo[navigationKey.sender]) }
+    }
+    
+    static func getAnimated(from userInfo: Parameters) -> Bool? {
+        let value = userInfo[navigationKey.animation]
+        return value as? Bool
+    }
+    
     static func setCompletion(
         _ completion: VoidClosure?,
         with transitionCoordinator: UIViewControllerTransitionCoordinator?,
