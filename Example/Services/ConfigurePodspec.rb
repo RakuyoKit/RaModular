@@ -13,7 +13,7 @@ def configure(spec:, name:, local_deps: [])
   spec.authors = 'Rakuyo'
   spec.source = { :path => '.' }
   spec.source_files = "Sources/*.swift"
-  spec.ios.deployment_target = '13.0'
+  spec.ios.deployment_target = '11.0'
   spec.swift_versions = ['5.5']
 
   local_deps.each do |dep|

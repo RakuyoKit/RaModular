@@ -13,7 +13,11 @@ import RaServicesCore
 extension RASExtendable where Base: UIApplication {
     /// return the `keyWindow`.
     var keyWindow: UIWindow? {
-        mainScene?.windows.first { $0.isKeyWindow }
+        if #available(iOS 13.0, *) {
+            return mainScene?.windows.first { $0.isKeyWindow }
+        } else {
+            return Base.shared.keyWindow
+        }
     }
     
     /// Get the root view controller.
@@ -45,6 +49,7 @@ extension RASExtendable where Base: UIApplication {
 
 extension RASExtendable where Base: UIApplication {
     /// Used to replace `UIScreen.main`.
+    @available(iOS 13.0, *)
     var mainScene: UIWindowScene? {
         base.connectedScenes
             .compactMap { $0 as? UIWindowScene }
