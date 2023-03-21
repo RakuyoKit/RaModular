@@ -19,4 +19,16 @@ public protocol ServiceNavigationProvider {
     /// You should implement this property as a computed property and return
     /// a `UIViewController` object or its subclass inside the closure.
     static var action: NavigationAction { get }
+    
+    /// Register the route event.
+    ///
+    /// You need to call this method to register the route event before invoking the route,
+    /// otherwise the route event will not respond.
+    static func register()
+}
+
+public extension ServiceNavigationProvider {
+    static func register() {
+        Navigation.register(router, with: action)
+    }
 }
