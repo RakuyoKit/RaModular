@@ -7,4 +7,4 @@
 
 import Foundation
 
-public struct OrderServiceProvider { }
+public class OrderServiceProvider: NSObject { }

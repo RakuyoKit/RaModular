@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         
         NavigationMode.default = .present
         
-        OrderService.open(mode: .show(), animated: false) {
+        OrderService.open(mode: .show(), animated: true) {
             print("after viewDidAppear")
         }
     }

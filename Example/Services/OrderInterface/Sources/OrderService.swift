@@ -12,7 +12,7 @@ import RaServices
 public struct OrderService: ServiceProviding {
     public typealias BehaviorProvider = OrderServiceBehaviorProvider
     
-    public static func createProvider() -> Any {
+    public static func createProviderObject() -> AnyObject {
         return OrderServiceProvider()
     }
 }

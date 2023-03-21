@@ -26,6 +26,15 @@ extension OrderServiceProvider: ServiceNavigationProvider {
     }
 }
 
+// MARK: - UIApplicationDelegate
+
+extension OrderServiceProvider: UIApplicationDelegate {
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        Self.register()
+        return true
+    }
+}
+
 // MARK: - OrderServiceBehaviorProvider
 
 extension OrderServiceProvider: OrderServiceBehaviorProvider {

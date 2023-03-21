@@ -13,16 +13,29 @@ import RaServicesURLNavigate
 
 /// A collection of ServiceBehaviorProviding and ServiceNavigationProviding that
 /// simplifies the process when using both protocols simultaneously.
-public protocol ServiceProviding: ServiceBehaviorProviding & ServiceNavigationProviding {
+public protocol ServiceProviding: ServiceBehaviorProviding & ServiceNavigationProviding & ServiceLifecycleProviding {
     /// Creating a service provider instance.
-    static func createProvider() -> Any
+    static func createProvider() -> Any?
+    
+    ///
+    static func createProviderObject() -> AnyObject
+}
+
+public extension ServiceProviding {
+    static func createProvider() -> Any? {
+        return nil
+    }
+    
+    static func createProviderObject() -> AnyObject {
+        fatalError("❌ As a backing method, you should at least implement the method")
+    }
 }
 
 // MARK: - ServiceBehaviorProviding Default Provider
 
 public extension ServiceProviding {
     static func createBehaviorProvider() -> Any {
-        return createProvider()
+        return createProvider() ?? createProviderObject()
     }
 }
 
@@ -30,6 +43,14 @@ public extension ServiceProviding {
 
 public extension ServiceProviding {
     static func createNavigationProvider() -> Any {
-        return createProvider()
+        return createProvider() ?? createProviderObject()
+    }
+}
+
+// MARK: - ServiceLifecycleProviding Default Provider
+
+public extension ServiceProviding {
+    static func createLifecycleProvider() -> AnyObject {
+        return createProviderObject()
     }
 }
