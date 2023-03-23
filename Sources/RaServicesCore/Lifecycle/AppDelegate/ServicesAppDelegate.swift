@@ -11,7 +11,7 @@ import UIKit
 ///
 open class ServicesAppDelegate: BaseLifecycleDelegate {
     ///
-    private lazy var applicationDelegateServices = {
+    private lazy var delegateServices = {
         ContiguousArray(internalCachedServices.compactMap { $0 as? UIApplicationDelegate })
     }()
 }
@@ -23,7 +23,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        return applicationDelegateServices.rsv.distribute {
+        return delegateServices.rsv.distribute {
             $0.application?(application, willFinishLaunchingWithOptions: launchOptions)
         }
     }
@@ -32,95 +32,95 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        return applicationDelegateServices.rsv.distribute {
+        return delegateServices.rsv.distribute {
             $0.application?(application, didFinishLaunchingWithOptions: launchOptions)
         }
     }
     
     open func applicationDidFinishLaunching(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationDidFinishLaunching?(application)
         }
     }
     
     open func applicationDidBecomeActive(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationDidBecomeActive?(application)
         }
     }
     
     open func applicationWillResignActive(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationWillResignActive?(application)
         }
     }
     
     open func applicationDidEnterBackground(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationDidEnterBackground?(application)
         }
     }
     
     open func applicationWillEnterForeground(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationWillEnterForeground?(application)
         }
     }
     
     open func applicationWillTerminate(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationWillTerminate?(application)
         }
     }
     
     open func applicationProtectedDataWillBecomeUnavailable(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationProtectedDataWillBecomeUnavailable?(application)
         }
     }
     
     open func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationProtectedDataDidBecomeAvailable?(application)
         }
     }
     
     open func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationDidReceiveMemoryWarning?(application)
         }
     }
     
     open func applicationSignificantTimeChange(_ application: UIApplication) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.applicationSignificantTimeChange?(application)
         }
     }
     
     @available(iOS, introduced: 6.0, deprecated: 13.2, message: "Use application:shouldSaveSecureApplicationState: instead")
     open func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
-        return applicationDelegateServices.rsv.distribute {
+        return delegateServices.rsv.distribute {
             $0.application?(application, shouldSaveApplicationState: coder)
         }
     }
     
     @available(iOS 13.2, *)
     open func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
-        return applicationDelegateServices.rsv.distribute {
+        return delegateServices.rsv.distribute {
             $0.application?(application, shouldSaveSecureApplicationState: coder)
         }
     }
     
     @available(iOS, introduced: 6.0, deprecated: 13.2, message: "Use application:shouldRestoreSecureApplicationState: instead")
     open func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
-        return applicationDelegateServices.rsv.distribute {
+        return delegateServices.rsv.distribute {
             $0.application?(application, shouldRestoreApplicationState: coder)
         }
     }
     
     @available(iOS 13.2, *)
     open func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
-        return applicationDelegateServices.rsv.distribute {
+        return delegateServices.rsv.distribute {
             $0.application?(application, shouldRestoreSecureApplicationState: coder)
         }
     }
@@ -130,7 +130,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         viewControllerWithRestorationIdentifierPath identifierComponents: [String],
         coder: NSCoder
     ) -> UIViewController? {
-        for services in applicationDelegateServices {
+        for services in delegateServices {
             if let controller = services.application?(
                 application,
                 viewControllerWithRestorationIdentifierPath: identifierComponents,
@@ -143,13 +143,13 @@ extension ServicesAppDelegate: UIApplicationDelegate {
     }
     
     open func application(_ application: UIApplication, willEncodeRestorableStateWith coder: NSCoder) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, willEncodeRestorableStateWith: coder)
         }
     }
     
     open func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, didDecodeRestorableStateWith: coder)
         }
     }
@@ -158,7 +158,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         willContinueUserActivityWithType userActivityType: String
     ) -> Bool {
-        return applicationDelegateServices.rsv.distribute {
+        return delegateServices.rsv.distribute {
             $0.application?(application, willContinueUserActivityWithType: userActivityType)
         }
     }
@@ -168,7 +168,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         continue userActivity: NSUserActivity,
         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
     ) -> Bool {
-        let returns = applicationDelegateServices.rsv.distribute {
+        let returns = delegateServices.rsv.distribute {
             $0.application?(application, continue: userActivity, restorationHandler: $1)
             
         } completion: {
@@ -180,7 +180,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
     }
     
     open func application(_ application: UIApplication, didUpdate userActivity: NSUserActivity) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, didUpdate: userActivity)
         }
     }
@@ -190,7 +190,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         didFailToContinueUserActivityWithType userActivityType: String,
         error: Error
     ) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, didFailToContinueUserActivityWithType: userActivityType, error: error)
         }
     }
@@ -199,7 +199,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier
     ) -> Bool {
-        return applicationDelegateServices.rsv.distribute {
+        return delegateServices.rsv.distribute {
             $0.application?(application, shouldAllowExtensionPointIdentifier: extensionPointIdentifier)
         }
     }
@@ -209,7 +209,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         willChangeStatusBarOrientation newStatusBarOrientation: UIInterfaceOrientation,
         duration: TimeInterval
     ) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, willChangeStatusBarOrientation: newStatusBarOrientation, duration: duration)
         }
     }
@@ -218,19 +218,19 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         didChangeStatusBarOrientation oldStatusBarOrientation: UIInterfaceOrientation
     ) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, didChangeStatusBarOrientation: oldStatusBarOrientation)
         }
     }
     
     open func application(_ application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, willChangeStatusBarFrame: newStatusBarFrame)
         }
     }
     
     open func application(_ application: UIApplication, didChangeStatusBarFrame oldStatusBarFrame: CGRect) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, didChangeStatusBarFrame: oldStatusBarFrame)
         }
     }
@@ -239,7 +239,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
         }
     }
@@ -248,7 +248,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         didFailToRegisterForRemoteNotificationsWithError error: Error
     ) {
-        applicationDelegateServices.rsv.distribute {
+        delegateServices.rsv.distribute {
             $0.application?(application, didFailToRegisterForRemoteNotificationsWithError: error)
         }
     }
@@ -258,7 +258,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
-        return applicationDelegateServices.rsv.distribute {
+        return delegateServices.rsv.distribute {
             $0.application?(application, open: url, options: options)
         }
     }

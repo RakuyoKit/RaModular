@@ -14,7 +14,7 @@ import OrderInterface
 @main
 class AppDelegate: ServicesAppDelegate {
 
-    override var services: [ServicesAppDelegate.Services] {
+    override var services: [Services] {
         [OrderService.self]
     }
     
