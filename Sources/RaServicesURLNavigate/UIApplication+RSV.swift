@@ -1,5 +1,5 @@
 //
-//  UIApplication+RAS.swift
+//  UIApplication+RSV.swift
 //  RaServices
 //
 //  Created by Rakuyo on 2023/03/17.
@@ -10,7 +10,7 @@ import UIKit
 
 import RaServicesCore
 
-extension RASExtendable where Base: UIApplication {
+extension RSVExtendable where Base: UIApplication {
     /// return the `keyWindow`.
     var keyWindow: UIWindow? {
         if #available(iOS 13.0, *) {
@@ -25,7 +25,7 @@ extension RASExtendable where Base: UIApplication {
     
     /// The currently displayed topmost view controller.
     func topVisibleViewController(
-        base: UIViewController? = Base.shared.ras.rootViewController
+        base: UIViewController? = Base.shared.rsv.rootViewController
     ) -> UIViewController? {
         guard base != nil else { return nil }
         
@@ -47,7 +47,7 @@ extension RASExtendable where Base: UIApplication {
 
 // MARK: - Tools
 
-extension RASExtendable where Base: UIApplication {
+extension RSVExtendable where Base: UIApplication {
     /// Used to replace `UIScreen.main`.
     @available(iOS 13.0, *)
     var mainScene: UIWindowScene? {

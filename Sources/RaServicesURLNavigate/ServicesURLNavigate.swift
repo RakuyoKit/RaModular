@@ -52,7 +52,7 @@ public extension ServicesURLNavigate {
             return
         }
         
-        guard let topVisibleViewController = UIApplication.shared.ras.topVisibleViewController() else {
+        guard let topVisibleViewController = UIApplication.shared.rsv.topVisibleViewController() else {
             print("❌ Failed to retrieve the currently displayed view controller, unable to perform the navigation.")
             return
         }
