@@ -6,8 +6,6 @@
 //  Copyright © 2023 Rakuyo. All rights reserved.
 //
 
-import Foundation
-
 public struct RSVExtendable<Base> {
     /// Base object to extend.
     public var base: Base
@@ -49,15 +47,15 @@ public extension RSVNamespaceProvidable {
 // MARK: - Extend `rsv` proxy.
 
 // swiftlint:disable colon
-import struct Swift.String;        extension String  : RSVNamespaceProvidable { }
-import struct Swift.Int;           extension Int     : RSVNamespaceProvidable { }
-import struct Swift.Double;        extension Double  : RSVNamespaceProvidable { }
-import struct Swift.Float;         extension Float   : RSVNamespaceProvidable { }
-import class  Foundation.NSObject; extension NSObject: RSVNamespaceProvidable { }
-import struct Foundation.Date;     extension Date    : RSVNamespaceProvidable { }
-import struct Foundation.URL;      extension URL     : RSVNamespaceProvidable { }
-import struct Foundation.Data;     extension Data    : RSVNamespaceProvidable { }
-import struct UIKit.CGPoint;       extension CGPoint : RSVNamespaceProvidable { }
-import struct UIKit.CGSize;        extension CGSize  : RSVNamespaceProvidable { }
-import struct UIKit.CGRect;        extension CGRect  : RSVNamespaceProvidable { }
+import struct Swift.String;         extension String    : RSVNamespaceProvidable { }
+import struct Swift.Int;            extension Int       : RSVNamespaceProvidable { }
+import struct Swift.Double;         extension Double    : RSVNamespaceProvidable { }
+import struct Swift.Float;          extension Float     : RSVNamespaceProvidable { }
+import class  Foundation.NSObject;  extension NSObject  : RSVNamespaceProvidable { }
+import struct Foundation.Date;      extension Date      : RSVNamespaceProvidable { }
+import struct Foundation.URL;       extension URL       : RSVNamespaceProvidable { }
+import struct Foundation.Data;      extension Data      : RSVNamespaceProvidable { }
+import struct UIKit.CGPoint;        extension CGPoint   : RSVNamespaceProvidable { }
+import struct UIKit.CGSize;         extension CGSize    : RSVNamespaceProvidable { }
+import struct UIKit.CGRect;         extension CGRect    : RSVNamespaceProvidable { }
 // swiftlint:enable colon
