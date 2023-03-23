@@ -29,6 +29,10 @@ public extension ServiceNavigationProviding {
         completion: VoidClosure? = nil
     ) {
         let target = routerProviderType.getRouterTarget(with: userInfo)
+        
+        // Enables automatic registration in some scenarios with the help of repeated registration.
+        target.registerRouter()
+        
         Navigation.open(target.router, with: userInfo, mode: mode, animated: animated, completion: completion)
     }
 }

@@ -37,8 +37,11 @@ public extension Navigation {
         
         private lazy var table: [Key: Value] = [:]
         
-        func save(_ value: @escaping Value, to url: RouterURL) {
-            table[url.cacheKey] = value
+        func saveIfNotExist(_ value: @escaping Value, to url: RouterURL) {
+            let key = url.cacheKey
+            if _fastPath(table[key] == nil) {
+                table[key] = value
+            }
         }
         
         func value(of url: RouterURL) -> Value? {

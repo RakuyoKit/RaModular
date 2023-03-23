@@ -39,7 +39,7 @@ public extension PredefinedKey {
 
 public extension ServicesURLNavigate {
     static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction) {
-        NavigationTable.shared.save(action, to: url)
+        NavigationTable.shared.saveIfNotExist(action, to: url)
     }
     
     static func open(
