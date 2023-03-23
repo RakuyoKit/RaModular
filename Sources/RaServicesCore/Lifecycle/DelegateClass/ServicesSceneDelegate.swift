@@ -8,19 +8,26 @@
 
 import UIKit
 
+/// Replaces the `SceneDelegate` class in the main project and
+/// is responsible for distributing lifecycle events to submodules.
 ///
+/// Please note:
+/// This class does not distribute all the `UIWindowSceneDelegate` methods.
+/// For the methods that are not implemented, you can try to implement the corresponding methods in the main project
+/// and then refer to the implementation in this document to distribute the events to the submodules.
+///
+/// You should modify the `SceneDelegate` implementation in your main project to change its parent class to this type.
+/// Example:
+///
+/// ```swift
+/// import RaServicesCore
+///
+/// class SceneDelegate: ServicesSceneDelegate {
+///     // your code ...
+/// }
+/// ```
 @available(iOS 13.0, *)
-open class ServicesSceneDelegate: BaseLifecycleDelegate {
-    ///
-    private lazy var delegateServices = {
-        ContiguousArray(internalCachedServices.compactMap { $0 as? UIWindowSceneDelegate })
-    }()
-}
-
-// MARK: - UIWindowSceneDelegate
-
-@available(iOS 13.0, *)
-extension ServicesSceneDelegate: UIWindowSceneDelegate {
+open class ServicesSceneDelegate: BaseLifecycleDelegate<UIWindowSceneDelegate>, UIWindowSceneDelegate {
     open func windowScene(
         _ windowScene: UIWindowScene,
         didUpdate previousCoordinateSpace: UICoordinateSpace,
@@ -44,12 +51,7 @@ extension ServicesSceneDelegate: UIWindowSceneDelegate {
             completionHandler(result)
         }
     }
-}
-
-// MARK: - UISceneDelegate
-
-@available(iOS 13.0, *)
-extension ServicesSceneDelegate: UISceneDelegate {
+    
     open func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         delegateServices.rsv.distribute {
             $0.scene?(scene, willConnectTo: session, options: connectionOptions)

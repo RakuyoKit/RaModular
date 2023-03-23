@@ -9,7 +9,7 @@
 import UIKit
 
 /// Base Classes for Life Cycle Delegate.
-open class BaseLifecycleDelegate: UIResponder {
+open class BaseLifecycleDelegate<Delegate>: UIResponder {
     public typealias Services = ServiceLifecycleProviding.Type
     
     /// Types of modules requiring lifecycle interfaces
@@ -21,7 +21,12 @@ open class BaseLifecycleDelegate: UIResponder {
     ///
     /// Avoid the need to get the corresponding type array by calculating properties
     /// every time the lifecycle method is triggered.
-    lazy var internalCachedServices = {
+    private lazy var internalCachedServices = {
         ContiguousArray(services.compactMap { $0.createLifecycleProvider() })
+    }()
+    
+    /// Get all the data from `internalCachedServices` that can be converted to the `Delegate` type.
+    lazy var delegateServices = {
+        ContiguousArray(internalCachedServices.compactMap { $0 as? Delegate })
     }()
 }

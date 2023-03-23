@@ -8,17 +8,25 @@
 
 import UIKit
 
+/// Replaces the `AppDelegate` class in the main project and
+/// is responsible for distributing lifecycle events to submodules.
 ///
-open class ServicesAppDelegate: BaseLifecycleDelegate {
-    ///
-    private lazy var delegateServices = {
-        ContiguousArray(internalCachedServices.compactMap { $0 as? UIApplicationDelegate })
-    }()
-}
-
-// MARK: - UIApplicationDelegate
-
-extension ServicesAppDelegate: UIApplicationDelegate {
+/// Please note:
+/// This class does not distribute all the `UIApplicationDelegate` methods.
+/// For the methods that are not implemented, you can try to implement the corresponding methods in the main project
+/// and then refer to the implementation in this document to distribute the events to the submodules.
+///
+/// You should modify the `AppDelegate` implementation in your main project to change its parent class to this type.
+/// Example:
+///
+/// ```swift
+/// import RaServicesCore
+///
+/// class AppDelegate: ServicesAppDelegate {
+///     // your code ...
+/// }
+/// ```
+open class ServicesAppDelegate: BaseLifecycleDelegate<UIApplicationDelegate>, UIApplicationDelegate {
     open func application(
         _ application: UIApplication,
         willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
