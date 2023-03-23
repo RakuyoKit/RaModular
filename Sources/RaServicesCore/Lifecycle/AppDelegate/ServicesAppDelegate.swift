@@ -182,7 +182,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         let returns = applicationDelegateServices.distribute {
             $0.application?(application, continue: userActivity, restorationHandler: $1)
             
-        } completionHandler: {
+        } completion: {
             let result = $0.reduce([]) { $0 + ($1 ?? []) }
             restorationHandler(result)
         }
@@ -291,33 +291,32 @@ extension Collection {
         try forEach(block)
     }
     
+    @discardableResult
     func distribute<T, S>(
         _ work: @escaping (Element, @escaping (T) -> Void) -> S?,
-        completionHandler: @escaping ([T]) -> Void
+        completion: @escaping ([T]) -> Void
     ) -> [S] {
+        let dispatchGroup = DispatchGroup()
         var results: [T] = []
         var returns: [S] = []
         
-        var iterator = makeIterator()
-        
-        func performNext() {
-            guard var service = iterator.next() else {
-                completionHandler(results)
-                return
-            }
-            
-            let returned = work(service) { result in
-                results.append(result)
-                performNext()
+        for element in self {
+            dispatchGroup.enter()
+            let returned = work(element) {
+                results.append($0)
+                dispatchGroup.leave()
             }
             
             if let returned = returned {
                 returns.append(returned)
-                performNext()
+            } else {
+                dispatchGroup.leave()
             }
         }
         
-        performNext()
+        dispatchGroup.notify(queue: .main) {
+            completion(results)
+        }
         
         return returns
     }
