@@ -17,7 +17,7 @@ public struct RSVExtendable<Base> {
 }
 
 /// A type that has `RSVExtendable` extensions.
-public protocol RSVNamespaceProvidable {
+public protocol RSVNamespaceProviding {
     /// Extended type
     associatedtype CompatibleType
     
@@ -28,7 +28,7 @@ public protocol RSVNamespaceProvidable {
     var rsv: RSVExtendable<CompatibleType> { get set }
 }
 
-public extension RSVNamespaceProvidable {
+public extension RSVNamespaceProviding {
     /// `RSVExtendable` extensions.
     static var rsv: RSVExtendable<Self>.Type {
         get { RSVExtendable<Self>.self }
@@ -47,18 +47,18 @@ public extension RSVNamespaceProvidable {
 // MARK: - Extend `rsv` proxy.
 
 // swiftlint:disable colon
-import struct Swift.String;             extension String            : RSVNamespaceProvidable { }
-import struct Swift.Int;                extension Int               : RSVNamespaceProvidable { }
-import struct Swift.Double;             extension Double            : RSVNamespaceProvidable { }
-import struct Swift.Float;              extension Float             : RSVNamespaceProvidable { }
-import struct Swift.Array;              extension Array             : RSVNamespaceProvidable { }
-import struct Swift.ContiguousArray;    extension ContiguousArray   : RSVNamespaceProvidable { }
-import struct Swift.Set;                extension Set               : RSVNamespaceProvidable { }
-import class  Foundation.NSObject;      extension NSObject          : RSVNamespaceProvidable { }
-import struct Foundation.Date;          extension Date              : RSVNamespaceProvidable { }
-import struct Foundation.URL;           extension URL               : RSVNamespaceProvidable { }
-import struct Foundation.Data;          extension Data              : RSVNamespaceProvidable { }
-import struct UIKit.CGPoint;            extension CGPoint           : RSVNamespaceProvidable { }
-import struct UIKit.CGSize;             extension CGSize            : RSVNamespaceProvidable { }
-import struct UIKit.CGRect;             extension CGRect            : RSVNamespaceProvidable { }
+import struct Swift.String;             extension String            : RSVNamespaceProviding { }
+import struct Swift.Int;                extension Int               : RSVNamespaceProviding { }
+import struct Swift.Double;             extension Double            : RSVNamespaceProviding { }
+import struct Swift.Float;              extension Float             : RSVNamespaceProviding { }
+import struct Swift.Array;              extension Array             : RSVNamespaceProviding { }
+import struct Swift.ContiguousArray;    extension ContiguousArray   : RSVNamespaceProviding { }
+import struct Swift.Set;                extension Set               : RSVNamespaceProviding { }
+import class  Foundation.NSObject;      extension NSObject          : RSVNamespaceProviding { }
+import struct Foundation.Date;          extension Date              : RSVNamespaceProviding { }
+import struct Foundation.URL;           extension URL               : RSVNamespaceProviding { }
+import struct Foundation.Data;          extension Data              : RSVNamespaceProviding { }
+import struct UIKit.CGPoint;            extension CGPoint           : RSVNamespaceProviding { }
+import struct UIKit.CGSize;             extension CGSize            : RSVNamespaceProviding { }
+import struct UIKit.CGRect;             extension CGRect            : RSVNamespaceProviding { }
 // swiftlint:enable colon
