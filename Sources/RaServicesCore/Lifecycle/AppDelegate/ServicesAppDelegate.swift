@@ -18,12 +18,12 @@ open class ServicesAppDelegate: UIResponder {
     
     ///
     private lazy var _services = {
-        services.compactMap { $0.createLifecycleProvider() }
+        ContiguousArray(services.compactMap { $0.createLifecycleProvider() })
     }()
     
     ///
     private lazy var applicationDelegateServices = {
-        _services.compactMap { $0 as? UIApplicationDelegate }
+        ContiguousArray(_services.compactMap { $0 as? UIApplicationDelegate })
     }()
 }
 
@@ -34,7 +34,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        return applicationDelegateServices.distribute {
+        return applicationDelegateServices.rsv.distribute {
             $0.application?(application, willFinishLaunchingWithOptions: launchOptions)
         }
     }
@@ -43,95 +43,95 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        return applicationDelegateServices.distribute {
+        return applicationDelegateServices.rsv.distribute {
             $0.application?(application, didFinishLaunchingWithOptions: launchOptions)
         }
     }
     
     open func applicationDidFinishLaunching(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationDidFinishLaunching?(application)
         }
     }
     
     open func applicationDidBecomeActive(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationDidBecomeActive?(application)
         }
     }
     
     open func applicationWillResignActive(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationWillResignActive?(application)
         }
     }
     
     open func applicationDidEnterBackground(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationDidEnterBackground?(application)
         }
     }
     
     open func applicationWillEnterForeground(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationWillEnterForeground?(application)
         }
     }
     
     open func applicationWillTerminate(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationWillTerminate?(application)
         }
     }
     
     open func applicationProtectedDataWillBecomeUnavailable(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationProtectedDataWillBecomeUnavailable?(application)
         }
     }
     
     open func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationProtectedDataDidBecomeAvailable?(application)
         }
     }
     
     open func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationDidReceiveMemoryWarning?(application)
         }
     }
     
     open func applicationSignificantTimeChange(_ application: UIApplication) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.applicationSignificantTimeChange?(application)
         }
     }
     
     @available(iOS, introduced: 6.0, deprecated: 13.2, message: "Use application:shouldSaveSecureApplicationState: instead")
     open func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
-        return applicationDelegateServices.distribute {
+        return applicationDelegateServices.rsv.distribute {
             $0.application?(application, shouldSaveApplicationState: coder)
         }
     }
     
     @available(iOS 13.2, *)
     open func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
-        return applicationDelegateServices.distribute {
+        return applicationDelegateServices.rsv.distribute {
             $0.application?(application, shouldSaveSecureApplicationState: coder)
         }
     }
     
     @available(iOS, introduced: 6.0, deprecated: 13.2, message: "Use application:shouldRestoreSecureApplicationState: instead")
     open func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
-        return applicationDelegateServices.distribute {
+        return applicationDelegateServices.rsv.distribute {
             $0.application?(application, shouldRestoreApplicationState: coder)
         }
     }
     
     @available(iOS 13.2, *)
     open func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
-        return applicationDelegateServices.distribute {
+        return applicationDelegateServices.rsv.distribute {
             $0.application?(application, shouldRestoreSecureApplicationState: coder)
         }
     }
@@ -154,13 +154,13 @@ extension ServicesAppDelegate: UIApplicationDelegate {
     }
     
     open func application(_ application: UIApplication, willEncodeRestorableStateWith coder: NSCoder) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, willEncodeRestorableStateWith: coder)
         }
     }
     
     open func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, didDecodeRestorableStateWith: coder)
         }
     }
@@ -169,7 +169,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         willContinueUserActivityWithType userActivityType: String
     ) -> Bool {
-        return applicationDelegateServices.distribute {
+        return applicationDelegateServices.rsv.distribute {
             $0.application?(application, willContinueUserActivityWithType: userActivityType)
         }
     }
@@ -179,7 +179,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         continue userActivity: NSUserActivity,
         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
     ) -> Bool {
-        let returns = applicationDelegateServices.distribute {
+        let returns = applicationDelegateServices.rsv.distribute {
             $0.application?(application, continue: userActivity, restorationHandler: $1)
             
         } completion: {
@@ -191,7 +191,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
     }
     
     open func application(_ application: UIApplication, didUpdate userActivity: NSUserActivity) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, didUpdate: userActivity)
         }
     }
@@ -201,7 +201,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         didFailToContinueUserActivityWithType userActivityType: String,
         error: Error
     ) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, didFailToContinueUserActivityWithType: userActivityType, error: error)
         }
     }
@@ -210,7 +210,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier
     ) -> Bool {
-        return applicationDelegateServices.distribute {
+        return applicationDelegateServices.rsv.distribute {
             $0.application?(application, shouldAllowExtensionPointIdentifier: extensionPointIdentifier)
         }
     }
@@ -220,7 +220,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         willChangeStatusBarOrientation newStatusBarOrientation: UIInterfaceOrientation,
         duration: TimeInterval
     ) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, willChangeStatusBarOrientation: newStatusBarOrientation, duration: duration)
         }
     }
@@ -229,19 +229,19 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         didChangeStatusBarOrientation oldStatusBarOrientation: UIInterfaceOrientation
     ) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, didChangeStatusBarOrientation: oldStatusBarOrientation)
         }
     }
     
     open func application(_ application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, willChangeStatusBarFrame: newStatusBarFrame)
         }
     }
     
     open func application(_ application: UIApplication, didChangeStatusBarFrame oldStatusBarFrame: CGRect) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, didChangeStatusBarFrame: oldStatusBarFrame)
         }
     }
@@ -250,7 +250,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
         }
     }
@@ -259,7 +259,7 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         _ application: UIApplication,
         didFailToRegisterForRemoteNotificationsWithError error: Error
     ) {
-        applicationDelegateServices.distribute {
+        applicationDelegateServices.rsv.distribute {
             $0.application?(application, didFailToRegisterForRemoteNotificationsWithError: error)
         }
     }
@@ -269,55 +269,8 @@ extension ServicesAppDelegate: UIApplicationDelegate {
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
-        return applicationDelegateServices.distribute {
+        return applicationDelegateServices.rsv.distribute {
             $0.application?(application, open: url, options: options)
         }
-    }
-}
-
-
-
-
-extension Collection {
-    func distribute(_ block: (Element) -> Bool?) -> Bool {
-        return compactMap(block).reduce(true) { $0 && $1 }
-    }
-    
-    func distribute(_ block: (Element) -> Void) {
-        forEach(block)
-    }
-    
-    func distribute(_ block: (Element) throws -> Void) throws {
-        try forEach(block)
-    }
-    
-    @discardableResult
-    func distribute<T, S>(
-        _ work: @escaping (Element, @escaping (T) -> Void) -> S?,
-        completion: @escaping ([T]) -> Void
-    ) -> [S] {
-        let dispatchGroup = DispatchGroup()
-        var results: [T] = []
-        var returns: [S] = []
-        
-        for element in self {
-            dispatchGroup.enter()
-            let returned = work(element) {
-                results.append($0)
-                dispatchGroup.leave()
-            }
-            
-            if let returned = returned {
-                returns.append(returned)
-            } else {
-                dispatchGroup.leave()
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            completion(results)
-        }
-        
-        return returns
     }
 }
