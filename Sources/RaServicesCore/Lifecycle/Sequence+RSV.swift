@@ -9,8 +9,12 @@
 import Foundation
 
 public extension RSVExtendable where Base: Sequence {
+    func distribute<T>(_ block: (Base.Element) -> T?) -> [T] {
+        return base.compactMap(block)
+    }
+    
     func distribute(_ block: (Base.Element) -> Bool?) -> Bool {
-        return base.compactMap(block).reduce(true) { $0 && $1 }
+        return distribute(block).reduce(true) { $0 && $1 }
     }
     
     func distribute(_ block: (Base.Element) -> Void) {
