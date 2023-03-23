@@ -8,22 +8,22 @@
 
 import Foundation
 
-public extension RSVSequenceExtendable {
-    func distribute(_ block: (Element) -> Bool?) -> Bool {
+public extension RSVExtendable where Base: Sequence {
+    func distribute(_ block: (Base.Element) -> Bool?) -> Bool {
         return base.compactMap(block).reduce(true) { $0 && $1 }
     }
     
-    func distribute(_ block: (Element) -> Void) {
+    func distribute(_ block: (Base.Element) -> Void) {
         base.forEach(block)
     }
     
-    func distribute(_ block: (Element) throws -> Void) throws {
+    func distribute(_ block: (Base.Element) throws -> Void) throws {
         try base.forEach(block)
     }
     
     @discardableResult
     func distribute<T, S>(
-        _ work: @escaping (Element, @escaping (T) -> Void) -> S?,
+        _ work: @escaping (Base.Element, @escaping (T) -> Void) -> S?,
         completion: @escaping ([T]) -> Void
     ) -> [S] {
         let dispatchGroup = DispatchGroup()
