@@ -10,6 +10,8 @@ import Foundation
 
 ///
 public protocol ServiceLifecycleProviding {
+    associatedtype LifecycleProviderMock = AnyObject
+    
     ///
-    static func createLifecycleProvider() -> AnyObject
+    func createLifecycleProvider() -> LifecycleProviderMock
 }

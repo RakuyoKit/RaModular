@@ -12,7 +12,11 @@ import RaServices
 public struct OrderService: ServiceProviding {
     public typealias BehaviorProvider = OrderServiceBehaviorProvider
     
-    public static func createProviderObject() -> AnyObject {
+    public static let shared = OrderService()
+    
+    private init() { }
+    
+    public func createProvider() -> AnyObject {
         return OrderServiceProvider()
     }
 }

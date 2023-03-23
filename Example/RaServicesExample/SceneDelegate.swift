@@ -14,7 +14,7 @@ class SceneDelegate: ServicesSceneDelegate {
 
     var window: UIWindow?
 
-    override var services: [Services] {
+    override var services: [any Services] {
         []
     }
 }

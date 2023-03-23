@@ -29,6 +29,8 @@ public protocol ServiceBehaviorProviding {
     /// Actual provider of the behavior.
     associatedtype BehaviorProvider
     
+    associatedtype BehaviorProviderMock = Any
+    
     /// Used for creating a behavior provider.
     ///
     /// You should implement this method in the interface module of your service/component,
@@ -36,19 +38,19 @@ public protocol ServiceBehaviorProviding {
     ///
     /// NOTE: The service/component caller should not manually call this method.
     /// Please use the behaviorProvider property below to obtain the instance of the behavior provider.
-    static func createBehaviorProvider() -> Any
+    func createBehaviorProvider() -> BehaviorProviderMock
     
     /// Convert the object created by `createBehaviorProvider()` to the BehaviorProvider type and return it.
     ///
     /// This method is intended for the callers of the service/component.
     /// Users can use this method to obtain the behavior provider, which can then be used to trigger specific behaviors.
-    static var behaviorProvider: BehaviorProvider { get }
+    var behaviorProvider: BehaviorProvider { get }
 }
 
 // MARK: - Default
 
 public extension ServiceBehaviorProviding {
-    static var behaviorProvider: BehaviorProvider {
+    var behaviorProvider: BehaviorProvider {
         guard let provider = createBehaviorProvider() as? BehaviorProvider else {
             fatalError("You need to ensure that the object returned by `createBehaviorProvider()` is of type `\(BehaviorProvider.self)`! Please check your code.")
         }

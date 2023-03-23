@@ -16,5 +16,5 @@ public protocol ServiceNavigationProvider {
     /// Get route target
     ///
     /// - Parameter userInfo: Parameters may be required when creating navigation objects. Or the value can be passed to some scenario and then different view controllers are returned in different scenarios.
-    static func getRouterTarget(with userInfo: Parameters) -> NavigableViewControllerType
+    func getRouterTarget(with userInfo: Parameters) -> NavigableViewControllerType
 }

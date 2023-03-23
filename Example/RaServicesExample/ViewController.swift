@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _ = OrderService.behaviorProvider.updateLocalOrderCache()
+        _ = OrderService.shared.behaviorProvider.updateLocalOrderCache()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         
         NavigationMode.default = .present
         
-        OrderService.open(mode: .show(), animated: true) {
+        OrderService.shared.open(mode: .show(), animated: true) {
             print("after viewDidAppear")
         }
     }
