@@ -8,22 +8,11 @@
 
 import UIKit
 
-open class ServicesAppDelegate: UIResponder {
-    public typealias Services = ServiceLifecycleProviding.Type
-    
-    ///
-    open var services: [Services] {
-        fatalError("❌ Subclasses must override this property")
-    }
-    
-    ///
-    private lazy var _services = {
-        ContiguousArray(services.compactMap { $0.createLifecycleProvider() })
-    }()
-    
+///
+open class ServicesAppDelegate: BaseLifecycleDelegate {
     ///
     private lazy var applicationDelegateServices = {
-        ContiguousArray(_services.compactMap { $0 as? UIApplicationDelegate })
+        ContiguousArray(internalCachedServices.compactMap { $0 as? UIApplicationDelegate })
     }()
 }
 
