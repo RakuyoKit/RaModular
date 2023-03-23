@@ -16,12 +16,16 @@ extension Navigation {
     public struct RouterURL {
         public let urlComponents: URLComponents?
         
-        public init(url: Foundation.URL?) {
-            self.init(string: url?.absoluteString ?? "")
+        public init(_ string: String) {
+            self.urlComponents = .init(string: string)
         }
         
-        public init(string: String) {
-            self.urlComponents = .init(string: string)
+        public init(_ url: URL?) {
+            self.init(url?.absoluteString ?? "")
+        }
+        
+        public init<T: RawRepresentable>(_ enumCase: T) where T.RawValue == String {
+            self.init(enumCase.rawValue)
         }
     }
 }
@@ -75,6 +79,6 @@ extension Navigation.RouterURL: CustomStringConvertible {
 
 extension Navigation.RouterURL: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
-        self.init(string: value)
+        self.init(value)
     }
 }

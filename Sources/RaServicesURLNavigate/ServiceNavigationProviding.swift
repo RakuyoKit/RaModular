@@ -28,20 +28,8 @@ public extension ServiceNavigationProviding {
         animated: Bool? = nil,
         completion: VoidClosure? = nil
     ) {
-        let url = routerProviderType.router
-        Navigation.open(url, with: userInfo, mode: mode, animated: animated, completion: completion)
-    }
-}
-
-// MARK: -
-
-public extension ServiceNavigationProviding {
-    /// Register the route event.
-    ///
-    /// You need to call this method to register the route event before invoking the route,
-    /// otherwise the route event will not respond.
-    static func register() {
-        routerProviderType.register()
+        let target = routerProviderType.getRouterTarget(with: userInfo)
+        Navigation.open(target.router, with: userInfo, mode: mode, animated: animated, completion: completion)
     }
 }
 

@@ -10,12 +10,29 @@ import Foundation
 
 import RaServicesCore
 
+/// You can register and navigate routes by type.
+extension Navigation: ServicesURLNavigate { }
+
+///
 public protocol ServicesURLNavigate {
     ///
     static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction)
     
     ///
     static func open(_ url: NavigationRouterURL, with userInfo: Parameters, mode: NavigationMode?, animated: Bool?, completion: VoidClosure?)
+}
+
+public extension PredefinedKey {
+    enum Navigation {
+        ///
+        static let modeType = "ra_navigation_mode_type"
+        
+        ///
+        static let sender = "ra_navigation_sender"
+        
+        ///
+        static let animation = "ra_navigation_animation"
+    }
 }
 
 // MARK: - Default
@@ -91,19 +108,6 @@ public extension ServicesURLNavigate {
         case .present:
             topVisibleViewController.present(controller, animated: _animated, completion: completion)
         }
-    }
-}
-
-public extension PredefinedKey {
-    enum Navigation {
-        ///
-        static let modeType = "ra_navigation_mode_type"
-        
-        ///
-        static let sender = "ra_navigation_sender"
-        
-        ///
-        static let animation = "ra_navigation_animation"
     }
 }
 

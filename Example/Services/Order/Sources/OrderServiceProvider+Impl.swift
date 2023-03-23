@@ -14,23 +14,19 @@ import RaServicesURLNavigate
 // MARK: - ServiceNavigationProvider
 
 extension OrderServiceProvider: ServiceNavigationProvider {
-    public static var router: NavigationRouterURL {
-        "https://www.rakuyoo.com/order"
-    }
-    
-    public static var action: NavigationAction {
-        { _ in
-            print("hhhhh")
-            return OrderListViewController()
-        }
+    public static func getRouterTarget(with userInfo: Parameters) -> NavigableViewControllerType {
+        return OrderListViewController.self
     }
 }
 
 // MARK: - UIApplicationDelegate
 
 extension OrderServiceProvider: UIApplicationDelegate {
-    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        Self.register()
+    public func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+    ) -> Bool {
+        OrderListViewController.registerRouter()
         return true
     }
 }

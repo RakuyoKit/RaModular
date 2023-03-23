@@ -8,27 +8,13 @@
 
 import Foundation
 
+import RaServicesCore
+
 /// The protocol to be implemented when the service/component allows
 /// opening the component homepage through routing.
-public protocol ServiceNavigationProvider {    
-    /// Route identifier, which is the key of the route table.
-    static var router: NavigationRouterURL { get }
-    
-    /// The route behavior event, which corresponds to the content of the key.
+public protocol ServiceNavigationProvider {
+    /// Get route target
     ///
-    /// You should implement this property as a computed property and return
-    /// a `UIViewController` object or its subclass inside the closure.
-    static var action: NavigationAction { get }
-    
-    /// Register the route event.
-    ///
-    /// You need to call this method to register the route event before invoking the route,
-    /// otherwise the route event will not respond.
-    static func register()
-}
-
-public extension ServiceNavigationProvider {
-    static func register() {
-        Navigation.register(router, with: action)
-    }
+    /// - Parameter userInfo: Parameters may be required when creating navigation objects. Or the value can be passed to some scenario and then different view controllers are returned in different scenarios.
+    static func getRouterTarget(with userInfo: Parameters) -> NavigableViewControllerType
 }
