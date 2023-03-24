@@ -58,7 +58,7 @@ public protocol ServiceNavigationProviding {
     /// }
     ///
     /// extension OrderServiceProvider: ServiceNavigationProvider {
-    ///     func getRouterTarget(with userInfo: Parameters) -> NavigableViewControllerType {
+    ///     func getRouterTarget(with userInfo: Parameters) -> NavigableViewControllerType? {
     ///         return OrderListViewController.self
     ///     }
     /// }
@@ -95,7 +95,10 @@ public extension ServiceNavigationProviding {
         animated: Bool? = nil,
         completion: VoidClosure? = nil
     ) {
-        let target = routerProvider.getRouterTarget(with: userInfo)
+        guard let target = routerProvider.getRouterTarget(with: userInfo) else {
+            print("⚠️ ")
+            return
+        }
         
         // Enables automatic registration in some scenarios with the help of repeated registration.
         target.registerRouter()
