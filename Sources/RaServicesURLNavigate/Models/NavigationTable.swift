@@ -14,7 +14,7 @@ import RaServicesCore
 public typealias NavigationTable = Navigation.Table
 
 /// Route behavior corresponding to the route in the route table.
-public typealias NavigationAction = NavigationTable.Value
+public typealias NavigationBehavior = NavigationTable.Value
 
 public extension Navigation {
     /// Route table, which stores registered route implementations.
@@ -28,7 +28,7 @@ public extension Navigation {
         private typealias Key = RouterURL.CacheKey
         
         /// Route behavior corresponding to the route in the route table.
-        public typealias Value = (_ mode: NavigationMode, _ userInfo: Parameters) -> UIViewController?
+        public typealias Value = (_ url: NavigationRouterURL, _ mode: NavigationMode, _ userInfo: Parameters) -> UIViewController?
         
         /// Responsible for storing navigation behavior.
         private static var table: [Key: Value] = [:]

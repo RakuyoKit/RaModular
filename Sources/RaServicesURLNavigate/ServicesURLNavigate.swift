@@ -32,8 +32,8 @@ public protocol ServicesURLNavigate {
     ///
     /// - Parameters:
     ///   - url: The key of the routing table, the unique identifier corresponding to a certain navigation behavior.
-    ///   - action: The value of the routing table, the navigation behavior.
-    static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction)
+    ///   - behavior: The value of the routing table, the navigation behavior.
+    static func register(_ url: NavigationRouterURL, with behavior: @escaping NavigationBehavior)
     
     /// Open the view controller through the url.
     ///
@@ -61,7 +61,7 @@ public protocol ServicesURLNavigate {
 // MARK: - Default
 
 public extension ServicesURLNavigate {
-    static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction) {
+    static func register(_ url: NavigationRouterURL, with behavior: @escaping NavigationBehavior) {
         NavigationTable[url, isCovered: false] = behavior
     }
     

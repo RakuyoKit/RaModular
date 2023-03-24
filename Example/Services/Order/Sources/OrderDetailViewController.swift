@@ -31,10 +31,12 @@ extension OrderDetailViewController: ViewControllerNavigable {
         .init(OrderRouter.detail)
     }
     
-    static func createRouterTarget(mode: NavigationMode, userInfo: Parameters) -> UIViewController {
-        let vc = OrderDetailViewController()
-        
-        guard case .present = mode else { return vc }
-        return UINavigationController(rootViewController: vc)
+    static var routerBehavior: NavigationTable.Value {
+        { (url, mode, userInfo) in
+            let vc = OrderDetailViewController()
+            
+            guard case .present = mode else { return vc }
+            return UINavigationController(rootViewController: vc)
+        }
     }
 }
