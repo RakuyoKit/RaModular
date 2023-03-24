@@ -16,6 +16,8 @@ public struct OrderService: ServiceProviding {
     
     private init() { }
     
+    public let weight: String = "a_b"
+    
     public func createProvider() -> AnyObject {
         return OrderServiceProvider()
     }

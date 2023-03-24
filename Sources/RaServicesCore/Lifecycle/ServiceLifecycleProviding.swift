@@ -15,4 +15,13 @@ public protocol ServiceLifecycleProviding {
     
     ///
     func createLifecycleProvider() -> LifecycleProviderMock
+    
+    ///
+    var weight: String { get }
+}
+
+// MARK: - Default
+
+public extension ServiceLifecycleProviding {
+    var weight: String { "" }
 }

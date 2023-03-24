@@ -23,6 +23,7 @@ open class BaseLifecycleDelegate<Delegate>: UIResponder {
     /// every time the lifecycle method is triggered.
     private lazy var internalCachedServices = {
         ContiguousArray(services
+            .sorted { $0.weight < $1.weight }
             .compactMap { $0.createLifecycleProvider() })
     }()
     

@@ -15,7 +15,9 @@ import OrderInterface
 class AppDelegate: ServicesAppDelegate {
 
     override var services: [any Services] {
-        [OrderService.shared]
+        [
+            OrderService.shared,
+        ]
     }
     
     override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
