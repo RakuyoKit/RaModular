@@ -8,7 +8,6 @@
 import UIKit
 
 import OrderInterface
-
 import RaServicesCore
 import RaServicesURLNavigate
 
@@ -24,7 +23,7 @@ class OrderListViewController: UIViewController {
         
         print("\(self) viewDidAppear")
         
-        OrderService.shared.open(with: ["type": "detail"]) {
+        Navigation.open(.init(OrderRouter.detail)) {
             print("push, then before detail viewDidAppear; present, then after detail viewDidAppear.")
         }
     }

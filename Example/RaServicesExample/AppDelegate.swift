@@ -7,9 +7,8 @@
 
 import UIKit
 
-import RaServicesCore
-
 import OrderInterface
+import RaServicesCore
 
 @main
 class AppDelegate: ServicesAppDelegate {

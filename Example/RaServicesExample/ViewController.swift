@@ -7,9 +7,8 @@
 
 import UIKit
 
-import RaServices
-//import RaServicesURLNavigate
 import OrderInterface
+import RaServices
 
 class ViewController: UIViewController {
 
@@ -24,7 +23,7 @@ class ViewController: UIViewController {
         
         NavigationMode.default = .present
         
-        OrderService.shared.open {
+        OrderService.shared.open(mode: .show()) {
             print("push, then before list viewDidAppear; present, then after list viewDidAppear.")
         }
     }
