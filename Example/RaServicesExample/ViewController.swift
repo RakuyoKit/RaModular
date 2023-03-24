@@ -22,10 +22,10 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        NavigationMode.default = .present
+        NavigationMode.default = .show()
         
-        OrderService.shared.open(mode: .show(), animated: true) {
-            print("after viewDidAppear")
+        OrderService.shared.open {
+            print("push, then before list viewDidAppear; present, then after list viewDidAppear.")
         }
     }
 }

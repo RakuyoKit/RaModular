@@ -15,7 +15,15 @@ import RaServicesURLNavigate
 
 extension OrderServiceProvider: ServiceNavigationProvider {
     public func getRouterTarget(with userInfo: Parameters) -> NavigableViewControllerType? {
-        return OrderListViewController.self
+        let type = userInfo["type"] as? String
+        
+        switch type {
+        case "detail":
+            return OrderDetailViewController.self
+            
+        default:
+            return OrderListViewController.self
+        }
     }
 }
 

@@ -1,44 +1,38 @@
 //
-//  OrderListViewController.swift
+//  OrderDetailViewController.swift
 //  Order
 //
-//  Created by Rakuyo on 2023/3/20.
+//  Created by Rakuyo on 2023/3/24.
 //
 
 import UIKit
 
-import OrderInterface
-
 import RaServicesCore
 import RaServicesURLNavigate
 
-class OrderListViewController: UIViewController {
+class OrderDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .red
+        view.backgroundColor = .green
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         print("\(self) viewDidAppear")
-        
-        OrderService.shared.open(with: ["type": "detail"]) {
-            print("push, then before detail viewDidAppear; present, then after detail viewDidAppear.")
-        }
     }
 }
 
 // MARK: - ViewControllerNavigable
 
-extension OrderListViewController: ViewControllerNavigable {
+extension OrderDetailViewController: ViewControllerNavigable {
     static var router: NavigationRouterURL {
-        .init(OrderRouter.list)
+        .init(OrderRouter.detail)
     }
     
     static func createRouterTarget(with userInfo: Parameters) -> UIViewController {
-        let vc = OrderListViewController()
+        let vc = OrderDetailViewController()
         vc.modalPresentationStyle = .fullScreen
         return vc
     }
