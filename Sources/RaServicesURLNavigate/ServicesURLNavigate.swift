@@ -12,9 +12,6 @@ import RaServicesCore
 
 /// Keys that may be used in the navigation process
 public enum NavigationPredefinedKey {
-    /// The default key used to wrap the parameters in the url.
-    public static let urlParameters = "ra_url_parameters"
-    
     /// If you want to define the way of navigation in the url, please use this value to define it.
     /// For details, please refer to `NavigationMode.Identifier`.
     public static let modeType = "ra_mode_type"
@@ -59,18 +56,6 @@ public protocol ServicesURLNavigate {
     ///   - animated: Whether to use animation during switching. Support all cases of `NavigationMode`.
     ///   - completion: The callback to be executed after the end of the animation. It may not work in some cases.
     static func open(_ url: NavigationRouterURL, with userInfo: Parameters, mode: NavigationMode?, animated: Bool?, completion: VoidClosure?)
-    
-    /// The framework will parse out the parameters in the url and put them into the `userInfo` parameter,
-    /// default implementation will put `urlParameters` under `userInfo[NavigationPredefinedKey.urlParameters]`
-    /// if it is not empty.
-    ///
-    /// This method provides an entry point where you can customize the specific implementation of this behavior.
-    /// This will affect where the closure that creates the view controller gets the parameters in the url from.
-    ///
-    /// - Parameters:
-    ///   - urlParameters: The parameters in the url.
-    ///   - userInfo: Target value.
-    static func parse(_ urlParameters: Parameters, to userInfo: inout Parameters)
 }
 
 // MARK: - Default
@@ -92,15 +77,18 @@ public extension ServicesURLNavigate {
             return
         }
         
-        let urlParameters = url.query
-        
-        // If the url contains parameters, use special key wrapping to add the parameters to the `userInfo`
         var userInfo = userInfo
-        parse(urlParameters, to: &userInfo)
+        // Put the parameters from the url into userInfo for passing.
+        // Considering the actual development, should maintain the unity of the logic,
+        // so the key of the parameters in the url, can userInfo in the possible key should be the same,
+        // at this time there should not be a conflict situation.
+        //
+        // If you have any objections to this realization, please submit issues to me, thank you.
+        userInfo = url.query.reduce(into: userInfo) { $0[$1.key] = $1.value }
         
         // If not provided externally, it tries to query from the url parameter and ends up touting the default value.
-        lazy var _mode = mode ?? getMode(from: urlParameters) ?? .default
-        lazy var _animated = animated ?? getAnimated(from: urlParameters) ?? true
+        lazy var _mode = mode ?? getMode(from: userInfo) ?? .default
+        lazy var _animated = animated ?? getAnimated(from: userInfo) ?? true
         
         guard let controller = actionBlock(_mode, userInfo) as? UIViewController else {
             print("❌ The behavior event should return a `UIViewController` object or its subclass! Please check your code.")
@@ -119,11 +107,6 @@ public extension ServicesURLNavigate {
             by: topVisibleViewController,
             completion: completion
         )
-    }
-    
-    static func parse(_ urlParameters: Parameters, to userInfo: inout Parameters) {
-        guard !urlParameters.isEmpty else { return }
-        userInfo[Key.urlParameters] = urlParameters
     }
 }
 
@@ -176,17 +159,13 @@ public extension ServicesURLNavigate {
 private extension ServicesURLNavigate {
     typealias Key = NavigationPredefinedKey
     
-    static func getURLParameters(from userInfo: Parameters) -> Parameters? {
-        return userInfo[Key.urlParameters] as? Parameters
-    }
-    
-    static func getMode(from urlParameters: Parameters) -> NavigationMode? {
-        let value = urlParameters[Key.modeType] as? NavigationMode.Identifier
+    static func getMode(from userInfo: Parameters) -> NavigationMode? {
+        let value = userInfo[Key.modeType] as? NavigationMode.Identifier
         return value.flatMap { NavigationMode(identifier: $0) }
     }
     
-    static func getAnimated(from urlParameters: Parameters) -> Bool? {
-        let value = urlParameters[Key.animation]
+    static func getAnimated(from userInfo: Parameters) -> Bool? {
+        let value = userInfo[Key.animation]
         guard let stringValue = value as? String else { return nil }
         return !{ $0 == "false" || $0 == "0" }(stringValue.lowercased())
     }
