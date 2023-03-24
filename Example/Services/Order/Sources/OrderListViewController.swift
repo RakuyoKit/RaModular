@@ -27,6 +27,10 @@ class OrderListViewController: UIViewController {
             print("push, then before detail viewDidAppear; present, then after detail viewDidAppear.")
         }
     }
+    
+    deinit {
+        print("\(self) deinit")
+    }
 }
 
 // MARK: - ViewControllerNavigable

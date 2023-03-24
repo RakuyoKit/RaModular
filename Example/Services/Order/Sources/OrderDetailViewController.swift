@@ -22,6 +22,10 @@ class OrderDetailViewController: UIViewController {
         
         print("\(self) viewDidAppear")
     }
+    
+    deinit {
+        print("\(self) deinit")
+    }
 }
 
 // MARK: - ViewControllerNavigable
