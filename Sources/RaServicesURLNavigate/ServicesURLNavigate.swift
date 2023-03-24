@@ -57,9 +57,8 @@ public protocol ServicesURLNavigate {
     ///   - userInfo: Some parameters to be passed by the initiator to the target controller.
     ///   - mode: The way to open the target controller. See `NavigationMode` type for details.
     ///   - animated: Whether to use animation during switching. Support all cases of `NavigationMode`.
-    ///   - completion: The callback to be executed after the end of the animation. Support all cases of `NavigationMode`.
+    ///   - completion: The callback to be executed after the end of the animation. It may not work in some cases.
     static func open(_ url: NavigationRouterURL, with userInfo: Parameters, mode: NavigationMode?, animated: Bool?, completion: VoidClosure?)
-    
     
     /// The framework will parse out the parameters in the url and put them into the `userInfo` parameter,
     /// default implementation will put `urlParameters` under `userInfo[NavigationPredefinedKey.urlParameters]`
@@ -138,34 +137,33 @@ public extension ServicesURLNavigate {
         by topVisibleViewController: UIViewController,
         completion: VoidClosure?
     ) {
-        lazy var _setCompletion = {
-            setCompletion(completion, with: topVisibleViewController.transitionCoordinator, animated: animated)
-        }
-        
         lazy var _navigate: (_ action: VoidClosure) -> Void = {
-            if animated {
-                $0()
-            } else {
+            guard animated else {
                 UIView.performWithoutAnimation($0)
+                return
             }
+            
+            CATransaction.setCompletionBlock(completion)
+            CATransaction.begin()
+            $0()
+            CATransaction.commit()
         }
         
         switch mode {
         case .show(let sender):
             _navigate {
                 topVisibleViewController.show(controller, sender: sender)
-                _setCompletion()
             }
             
         case .showDetail(let sender):
             _navigate {
                 topVisibleViewController.showDetailViewController(controller, sender: sender)
-                _setCompletion()
             }
             
         case .push:
-            topVisibleViewController.navigationController?.pushViewController(controller, animated: animated)
-            _setCompletion()
+            _navigate {
+                topVisibleViewController.navigationController?.pushViewController(controller, animated: animated)
+            }
             
         case .present:
             topVisibleViewController.present(controller, animated: animated, completion: completion)
@@ -191,17 +189,5 @@ private extension ServicesURLNavigate {
         let value = urlParameters[Key.animation]
         guard let stringValue = value as? String else { return nil }
         return !{ $0 == "false" || $0 == "0" }(stringValue.lowercased())
-    }
-    
-    static func setCompletion(
-        _ completion: VoidClosure?,
-        with transitionCoordinator: UIViewControllerTransitionCoordinator?,
-        animated: Bool
-    ) {
-        guard animated, let coordinator = transitionCoordinator else {
-            DispatchQueue.main.async { completion?() }
-            return
-        }
-        coordinator.animate(alongsideTransition: nil) { _ in completion?() }
     }
 }
