@@ -23,8 +23,6 @@ public protocol ViewControllerNavigable {
 
 public extension ViewControllerNavigable {
     /// Register the navigation behavior into the routing table.
-    ///
-    /// You need to make sure that this method has been called before performing the navigation behavior.
     static func registerRouter() {
         Navigation.register(router, with: createRouterTarget(with:))
     }

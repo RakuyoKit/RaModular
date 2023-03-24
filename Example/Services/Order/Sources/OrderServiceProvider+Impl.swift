@@ -26,7 +26,8 @@ extension OrderServiceProvider: UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        OrderListViewController.registerRouter()
+        // ⬇️ This line of code is not required
+        // OrderListViewController.registerRouter()
         return true
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 
 ///
 public protocol ServiceLifecycleProviding {
+    /// A placeholder to mask the real type.
     associatedtype LifecycleProviderMock = AnyObject
     
     ///

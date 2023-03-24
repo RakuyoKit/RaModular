@@ -14,6 +14,7 @@ import RaServicesURLNavigate
 /// A collection of ServiceBehaviorProviding and ServiceNavigationProviding that
 /// simplifies the process when using both protocols simultaneously.
 public protocol ServiceProviding: ServiceBehaviorProviding & ServiceNavigationProviding & ServiceLifecycleProviding {
+    /// A placeholder to mask the real type.
     associatedtype ProviderMock = AnyObject
     
     /// Creating a service provider instance.

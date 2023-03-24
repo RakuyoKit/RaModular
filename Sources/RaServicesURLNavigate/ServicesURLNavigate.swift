@@ -13,12 +13,35 @@ import RaServicesCore
 /// You can register and navigate routes by type.
 extension Navigation: ServicesURLNavigate { }
 
-///
+/// Provides the ability to display a view controller via url.
 public protocol ServicesURLNavigate {
+    /// Register the navigation behavior into the routing table.
     ///
+    /// - Parameters:
+    ///   - url: The key of the routing table, the unique identifier corresponding to a certain navigation behavior.
+    ///   - action: The value of the routing table, the navigation behavior.
     static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction)
     
+    /// Open the view controller through the url.
     ///
+    /// You need to make sure that the navigation behavior corresponding to
+    /// the url is registered before calling the method.
+    ///
+    /// For example:
+    /// ```swift
+    /// import RaServicesURLNavigate
+    ///
+    /// Navigation.open("some router url", mode: .show(), animated: true) {
+    ///     print("after viewDidAppear")
+    /// }
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - url: The key of the routing table, the unique identifier corresponding to a certain navigation behavior.
+    ///   - userInfo: Some parameters to be passed by the initiator to the target controller.
+    ///   - mode: The way to open the target controller. See `NavigationMode` type for details.
+    ///   - animated: Whether to use animation during switching. Support all cases of `NavigationMode`.
+    ///   - completion: The callback to be executed after the end of the animation. Support all cases of `NavigationMode`.
     static func open(_ url: NavigationRouterURL, with userInfo: Parameters, mode: NavigationMode?, animated: Bool?, completion: VoidClosure?)
 }
 

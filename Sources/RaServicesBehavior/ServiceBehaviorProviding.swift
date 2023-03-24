@@ -26,9 +26,11 @@ import RaServicesCore
 /// }
 /// ```
 public protocol ServiceBehaviorProviding {
-    /// Actual provider of the behavior.
+    /// The real provider of the service.
+    /// The type masked by the `BehaviorProviderMock`.
     associatedtype BehaviorProvider
     
+    /// A placeholder to mask the real type.
     associatedtype BehaviorProviderMock = Any
     
     /// Used for creating a behavior provider.
