@@ -98,7 +98,11 @@ public extension ServicesURLNavigate {
         var userInfo = userInfo
         parse(urlParameters, to: &userInfo)
         
-        guard let controller = actionBlock(userInfo) as? UIViewController else {
+        // If not provided externally, it tries to query from the url parameter and ends up touting the default value.
+        lazy var _mode = mode ?? getMode(from: urlParameters) ?? .default
+        lazy var _animated = animated ?? getAnimated(from: urlParameters) ?? true
+        
+        guard let controller = actionBlock(_mode, userInfo) as? UIViewController else {
             print("❌ The behavior event should return a `UIViewController` object or its subclass! Please check your code.")
             return
         }
@@ -107,10 +111,6 @@ public extension ServicesURLNavigate {
             print("❌ Failed to retrieve the currently displayed view controller, unable to perform the navigation.")
             return
         }
-        
-        // If not provided externally, it tries to query from the url parameter and ends up touting the default value.
-        let _mode = mode ?? getMode(from: urlParameters) ?? .default
-        let _animated = animated ?? getAnimated(from: urlParameters) ?? true
         
         show(
             controller,

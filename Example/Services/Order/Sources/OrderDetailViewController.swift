@@ -31,9 +31,10 @@ extension OrderDetailViewController: ViewControllerNavigable {
         .init(OrderRouter.detail)
     }
     
-    static func createRouterTarget(with userInfo: Parameters) -> UIViewController {
+    static func createRouterTarget(mode: NavigationMode, userInfo: Parameters) -> UIViewController {
         let vc = OrderDetailViewController()
-        vc.modalPresentationStyle = .fullScreen
-        return vc
+        
+        guard case .present = mode else { return vc }
+        return UINavigationController(rootViewController: vc)
     }
 }

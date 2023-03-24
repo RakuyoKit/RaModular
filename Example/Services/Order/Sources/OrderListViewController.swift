@@ -37,9 +37,13 @@ extension OrderListViewController: ViewControllerNavigable {
         .init(OrderRouter.list)
     }
     
-    static func createRouterTarget(with userInfo: Parameters) -> UIViewController {
+    static func createRouterTarget(mode: NavigationMode, userInfo: Parameters) -> UIViewController {
         let vc = OrderListViewController()
-        vc.modalPresentationStyle = .fullScreen
-        return vc
+        
+        guard case .present = mode else { return vc }
+        
+        let navi = UINavigationController(rootViewController: vc)
+        navi.modalPresentationStyle = .fullScreen
+        return navi
     }
 }

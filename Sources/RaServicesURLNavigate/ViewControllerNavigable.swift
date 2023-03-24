@@ -18,12 +18,12 @@ public protocol ViewControllerNavigable {
     static var router: NavigationRouterURL { get }
     
     /// Used to create route destination controllers.
-    static func createRouterTarget(with userInfo: Parameters) -> UIViewController
+    static func createRouterTarget(mode: NavigationMode, userInfo: Parameters) -> UIViewController
 }
 
 public extension ViewControllerNavigable {
     /// Register the navigation behavior into the routing table.
     static func registerRouter() {
-        Navigation.register(router, with: createRouterTarget(with:))
+        Navigation.register(router, with: createRouterTarget)
     }
 }

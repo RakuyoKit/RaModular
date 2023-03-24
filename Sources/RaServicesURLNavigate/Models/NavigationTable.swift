@@ -28,7 +28,7 @@ public extension Navigation {
         private typealias Key = RouterURL.CacheKey
         
         /// Route behavior corresponding to the route in the route table.
-        public typealias Value = (_ userInfo: Parameters) -> Any?
+        public typealias Value = (_ mode: NavigationMode, _ userInfo: Parameters) -> Any?
         
         /// Singleton.
         static let shared = Table()
