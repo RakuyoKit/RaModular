@@ -28,24 +28,22 @@ public extension Navigation {
         private typealias Key = RouterURL.CacheKey
         
         /// Route behavior corresponding to the route in the route table.
-        public typealias Value = (_ mode: NavigationMode, _ userInfo: Parameters) -> Any?
+        public typealias Value = (_ mode: NavigationMode, _ userInfo: Parameters) -> UIViewController?
         
-        /// Singleton.
-        static let shared = Table()
+        /// Responsible for storing navigation behavior.
+        private static var table: [Key: Value] = [:]
         
-        private init() { }
-        
-        private lazy var table: [Key: Value] = [:]
-        
-        func saveIfNotExist(_ value: @escaping Value, to url: RouterURL) {
-            let key = url.cacheKey
-            if _fastPath(table[key] == nil) {
-                table[key] = value
+        static subscript(url: RouterURL, isCovered covered: Bool = true) -> Value? {
+            get { table[url.cacheKey] }
+            set {
+                let key = url.cacheKey
+                if covered {
+                    table[key] = newValue
+                    
+                } else if _fastPath(table[key] == nil) {
+                    table[key] = newValue
+                }
             }
-        }
-        
-        func value(of url: RouterURL) -> Value? {
-            return table[url.cacheKey]
         }
     }
 }

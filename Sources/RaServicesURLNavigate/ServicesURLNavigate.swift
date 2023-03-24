@@ -62,7 +62,7 @@ public protocol ServicesURLNavigate {
 
 public extension ServicesURLNavigate {
     static func register(_ url: NavigationRouterURL, with action: @escaping NavigationAction) {
-        NavigationTable.shared.saveIfNotExist(action, to: url)
+        NavigationTable[url, isCovered: false] = behavior
     }
     
     static func open(
@@ -72,7 +72,7 @@ public extension ServicesURLNavigate {
         animated: Bool? = nil,
         completion: VoidClosure? = nil
     ) {
-        guard let actionBlock = NavigationTable.shared.value(of: url) else {
+        guard let behavior = NavigationTable[url] else {
             print("❌ No route table found for the given URL! Please check if the URL is registered. url: \(url)")
             return
         }
@@ -90,8 +90,8 @@ public extension ServicesURLNavigate {
         lazy var _mode = mode ?? getMode(from: userInfo) ?? .default
         lazy var _animated = animated ?? getAnimated(from: userInfo) ?? true
         
-        guard let controller = actionBlock(_mode, userInfo) as? UIViewController else {
-            print("❌ The behavior event should return a `UIViewController` object or its subclass! Please check your code.")
+        guard let controller = behavior(url, _mode, userInfo) else {
+            print("⚠️ The closure event returns nil instead of a view controller object. This navigation event will be ignored.")
             return
         }
         
