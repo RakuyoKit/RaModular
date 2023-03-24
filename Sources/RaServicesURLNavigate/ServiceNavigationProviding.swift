@@ -96,7 +96,7 @@ public extension ServiceNavigationProviding {
         completion: VoidClosure? = nil
     ) {
         guard let target = routerProvider.getRouterTarget(with: userInfo) else {
-            print("⚠️ ")
+            print("⚠️ Invalid route providers, this navigation will be ignored.")
             return
         }
         
