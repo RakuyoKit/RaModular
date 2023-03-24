@@ -8,6 +8,8 @@
 
 import Foundation
 
+import RaServicesCore
+
 /// The route URL, which can be understood as the identifier of the route event.
 public typealias NavigationRouterURL = Navigation.RouterURL
 
@@ -60,8 +62,8 @@ public extension Navigation.RouterURL {
         urlComponents?.path ?? ""
     }
     
-    var query: [URLQueryItem] {
-        urlComponents?.queryItems ?? []
+    var query: Parameters {
+        urlComponents?.queryItems?.reduce(into: Parameters()) { $0[$1.name] = $1.value } ?? [:]
     }
 }
 
