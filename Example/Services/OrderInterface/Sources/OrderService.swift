@@ -1,13 +1,13 @@
 //
-//  OrderService.swift
+//  OrderModule.swift
 //  OrderInterface
 //
-//  Created by Rakuyo on 2023/3/20.
+//  Created by Rakuyo on 2023/03/20.
 //
 
 import Foundation
 
-import RaServices
+import RaModular
 
 public struct OrderService: ServiceProviding {
     public typealias BehaviorProvider = OrderServiceBehaviorProvider

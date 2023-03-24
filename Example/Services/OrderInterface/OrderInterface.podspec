@@ -3,5 +3,5 @@ Pod::Spec.new do |s|
   configure(
     spec: s,
     name: 'OrderInterface',
-    local_deps: ['RaServices'])
+    local_deps: ['RaModular'])
 end

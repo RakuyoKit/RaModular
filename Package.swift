@@ -4,24 +4,24 @@
 import PackageDescription
 
 let package = Package(
-  name: "RaServices",
+  name: "RaModular",
   platforms: [.iOS(.v13)],
   products: [
-    .library(name: "RaServices", targets: ["RaServices"]),
-    .library(name: "RaServicesCore", targets: ["RaServicesCore"]),
-    .library(name: "RaServicesBehavior", targets: ["RaServicesBehavior"]),
-    .library(name: "RaServicesURLNavigate", targets: ["RaServicesURLNavigate"]),
+    .library(name: "RaModular", targets: ["RaModular"]),
+    .library(name: "RaModularCore", targets: ["RaModularCore"]),
+    .library(name: "RaModularRouter", targets: ["RaModularRouter"]),
+    .library(name: "RaModularBehavior", targets: ["RaModularBehavior"]),
   ],
   targets: [
     .target(
-      name: "RaServices",
+      name: "RaModular",
       dependencies: [
-        "RaServicesCore",
-        "RaServicesBehavior",
-        "RaServicesURLNavigate",
+        "RaModularCore",
+        "RaModularRouter",
+        "RaModularBehavior",
       ]),
-    .target(name: "RaServicesCore"),
-    .target(name: "RaServicesBehavior", dependencies: ["RaServicesCore"]),
-    .target(name: "RaServicesURLNavigate", dependencies: ["RaServicesCore"]),
-    .testTarget(name: "RaServicesTests", dependencies: ["RaServices"]),
+    .target(name: "RaModularCore"),
+    .target(name: "RaModularRouter", dependencies: ["RaModularCore"]),
+    .target(name: "RaModularBehavior", dependencies: ["RaModularCore"]),
+    .testTarget(name: "RaModularTests", dependencies: ["RaModular"]),
   ])

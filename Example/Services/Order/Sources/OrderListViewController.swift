@@ -2,14 +2,14 @@
 //  OrderListViewController.swift
 //  Order
 //
-//  Created by Rakuyo on 2023/3/20.
+//  Created by Rakuyo on 2023/03/20.
 //
 
 import UIKit
 
 import OrderInterface
-import RaServicesCore
-import RaServicesURLNavigate
+import RaModularCore
+import RaModularRouter
 
 class OrderListViewController: UIViewController {
     override func viewDidLoad() {
@@ -23,7 +23,7 @@ class OrderListViewController: UIViewController {
         
         print("\(self) viewDidAppear")
         
-        Navigation.open(.init(OrderRouter.detail)) {
+        Router.open(.init(OrderRouter.detail)) {
             print("push, then before detail viewDidAppear; present, then after detail viewDidAppear.")
         }
     }
@@ -33,14 +33,14 @@ class OrderListViewController: UIViewController {
     }
 }
 
-// MARK: - ViewControllerNavigable
+// MARK: - Navigatable
 
-extension OrderListViewController: ViewControllerNavigable {
-    static var router: NavigationRouterURL {
+extension OrderListViewController: Navigatable {
+    static var router: RouterURL {
         .init(OrderRouter.list)
     }
     
-    static var routerBehavior: NavigationTable.Value {
+    static var routerBehavior: RouterTable.Value {
         { (url, mode, userInfo) in
             let vc = OrderListViewController()
             

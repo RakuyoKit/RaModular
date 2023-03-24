@@ -8,12 +8,12 @@
 import UIKit
 
 import OrderInterface
-import RaServicesCore
-import RaServicesURLNavigate
+import RaModularCore
+import RaModularRouter
 
-// MARK: - ServiceNavigationProvider
+// MARK: - RouterProvider
 
-extension OrderServiceProvider: ServiceNavigationProvider {
+extension OrderServiceProvider: RouterProvider {
     public func getRouterTarget(with userInfo: Parameters) -> NavigableViewControllerType? {
         let type = userInfo["type"] as? String
         

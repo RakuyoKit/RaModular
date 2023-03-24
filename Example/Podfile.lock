@@ -2,47 +2,47 @@ PODS:
   - Order (0.1.0):
     - OrderInterface (= 0.1.0)
   - OrderInterface (0.1.0):
-    - RaServices (= 0.1.0)
-  - RaServices (0.1.0):
-    - RaServicesBehavior (= 0.1.0)
-    - RaServicesCore (= 0.1.0)
-    - RaServicesURLNavigate (= 0.1.0)
-  - RaServicesBehavior (0.1.0):
-    - RaServicesCore (= 0.1.0)
-  - RaServicesCore (0.1.0)
-  - RaServicesURLNavigate (0.1.0):
-    - RaServicesCore (= 0.1.0)
+    - RaModular (= 0.1.0)
+  - RaModular (0.1.0):
+    - RaModularBehavior (= 0.1.0)
+    - RaModularCore (= 0.1.0)
+    - RaModularRouter (= 0.1.0)
+  - RaModularBehavior (0.1.0):
+    - RaModularCore (= 0.1.0)
+  - RaModularCore (0.1.0)
+  - RaModularRouter (0.1.0):
+    - RaModularCore (= 0.1.0)
 
 DEPENDENCIES:
   - Order (from `./Services/Order`)
   - OrderInterface (from `./Services/OrderInterface`)
-  - RaServices (from `../`)
-  - RaServicesBehavior (from `../`)
-  - RaServicesCore (from `../`)
-  - RaServicesURLNavigate (from `../`)
+  - RaModular (from `../`)
+  - RaModularBehavior (from `../`)
+  - RaModularCore (from `../`)
+  - RaModularRouter (from `../`)
 
 EXTERNAL SOURCES:
   Order:
     :path: "./Services/Order"
   OrderInterface:
     :path: "./Services/OrderInterface"
-  RaServices:
+  RaModular:
     :path: "../"
-  RaServicesBehavior:
+  RaModularBehavior:
     :path: "../"
-  RaServicesCore:
+  RaModularCore:
     :path: "../"
-  RaServicesURLNavigate:
+  RaModularRouter:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Order: e076a4ce2d4f0006500d95a85ba8c015234dde27
-  OrderInterface: 2a2955099bf433be4dc2a7db3b164f1d3f82f93c
-  RaServices: 823d2d679f0530c69af50dc021c91aee41cbfe50
-  RaServicesBehavior: 425b4aad990780f40679add11934603d1c59cba2
-  RaServicesCore: 60455bca731dd7e7061652f713d8fb668f88d15b
-  RaServicesURLNavigate: 6a6da91b6b737b77b75118a4c0e64f5c45458924
+  Order: 33691516425617e16a11e6a3c46fdf9ec630d327
+  OrderInterface: 6780d6e1d353364ef11b28e5461448f9d50e18d9
+  RaModular: b5d8ccf46f14cc1c9b820fb39178e6a27124400b
+  RaModularBehavior: 5c433699537025460d17bf9cb0208f9f6d1da7c0
+  RaModularCore: 65c1707a1e4f9d3bae71d88aa201a963cbe94304
+  RaModularRouter: 76441f535870a88aae9573f3ad35c2b660d42527
 
-PODFILE CHECKSUM: 046551066b580540208c6e61ede2fcf22cc1b80d
+PODFILE CHECKSUM: c81bc8d578614957c5c79123d2e350e6be05a5bc
 
 COCOAPODS: 1.11.3

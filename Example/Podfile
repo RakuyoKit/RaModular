@@ -7,12 +7,12 @@ install! 'cocoapods',
          :preserve_pod_file_structure => true
 #         :generate_multiple_pod_projects => true
 
-target 'RaServicesExample' do
+target 'RaModularExample' do
   
-  pod 'RaServices', path: '../'
-  pod 'RaServicesCore', path: '../'
-  pod 'RaServicesBehavior', path: '../'
-  pod 'RaServicesURLNavigate', path: '../'
+  pod 'RaModular', path: '../'
+  pod 'RaModularCore', path: '../'
+  pod 'RaModularRouter', path: '../'
+  pod 'RaModularBehavior', path: '../'
 
   pod 'Order', path: './Services/Order'
   pod 'OrderInterface', path: './Services/OrderInterface'

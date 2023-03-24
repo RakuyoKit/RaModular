@@ -2,13 +2,13 @@
 //  OrderDetailViewController.swift
 //  Order
 //
-//  Created by Rakuyo on 2023/3/24.
+//  Created by Rakuyo on 2023/03/24.
 //
 
 import UIKit
 
-import RaServicesCore
-import RaServicesURLNavigate
+import RaModularCore
+import RaModularRouter
 
 class OrderDetailViewController: UIViewController {
     override func viewDidLoad() {
@@ -28,14 +28,14 @@ class OrderDetailViewController: UIViewController {
     }
 }
 
-// MARK: - ViewControllerNavigable
+// MARK: - Navigatable
 
-extension OrderDetailViewController: ViewControllerNavigable {
-    static var router: NavigationRouterURL {
+extension OrderDetailViewController: Navigatable {
+    static var router: RouterURL {
         .init(OrderRouter.detail)
     }
     
-    static var routerBehavior: NavigationTable.Value {
+    static var routerBehavior: RouterTable.Value {
         { (url, mode, userInfo) in
             let vc = OrderDetailViewController()
             

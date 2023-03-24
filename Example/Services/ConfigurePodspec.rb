@@ -9,7 +9,7 @@ def configure(spec:, name:, local_deps: [])
   spec.summary = 'summary'
   spec.license = 'MIT'
   spec.version = version
-  spec.homepage = 'https://github.com/RakuyoKit/RaServices'
+  spec.homepage = 'https://github.com/RakuyoKit/RaModular'
   spec.authors = 'Rakuyo'
   spec.source = { :path => '.' }
   spec.source_files = "Sources/*.swift"
