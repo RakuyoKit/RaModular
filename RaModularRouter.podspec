@@ -4,6 +4,6 @@ Pod::Spec.new do |spec|
   configure(
     spec: spec,
     name: 'RaModularRouter',
-    summary: 'RaModularRouter',
+    summary: 'Provides the ability to access view controllers through URLs.',
     local_deps: ['RaModularCore'])
 end

@@ -4,6 +4,6 @@ Pod::Spec.new do |spec|
   configure(
     spec: spec,
     name: 'RaModularBehavior',
-    summary: 'RaModularBehavior',
+    summary: 'Provides the functionality of encapsulating common services in native code.',
     local_deps: ['RaModularCore'])
 end

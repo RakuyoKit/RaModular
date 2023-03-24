@@ -4,6 +4,6 @@ Pod::Spec.new do |spec|
   configure(
     spec: spec,
     name: 'RaModular',
-    summary: 'RaModular',
+    summary: 'A Swift modularization framework that provides the functionality of accessing view controllers through URLs and encapsulating common services in native code.',
     local_deps: ['RaModularCore', 'RaModularRouter', 'RaModularBehavior'])
 end

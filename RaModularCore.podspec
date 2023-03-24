@@ -4,5 +4,5 @@ Pod::Spec.new do |spec|
   configure(
     spec: spec,
     name: 'RaModularCore',
-    summary: 'RaModularCore')
+    summary: 'The core tool of the modularization framework, which also provides the ability to access the app lifecycle within child components.')
 end
