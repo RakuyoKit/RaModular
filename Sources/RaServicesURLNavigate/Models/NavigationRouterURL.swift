@@ -16,14 +16,10 @@ public typealias NavigationRouterURL = Navigation.RouterURL
 extension Navigation {
     /// The route URL, which can be understood as the identifier of the route event.
     public struct RouterURL {
-        public let urlComponents: URLComponents?
+        private let urlComponents: URLComponents?
         
-        public init(_ string: String) {
-            self.urlComponents = .init(string: string)
-        }
-        
-        public init(_ url: URL?) {
-            self.init(url?.absoluteString ?? "")
+        public init<T: RouterURLProviding>(_ value: T) {
+            self.urlComponents = .init(string: value.router)
         }
         
         public init<T: RawRepresentable>(_ enumCase: T) where T.RawValue == String {
