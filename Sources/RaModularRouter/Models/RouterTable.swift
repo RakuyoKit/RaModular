@@ -6,7 +6,7 @@
 //  Copyright © 2023 Rakuyo. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 import RaModularCore
 
@@ -16,7 +16,7 @@ public typealias RouterTable = Router.Table
 /// Represents a routing action and is also the value corresponding to the URL in the `RouterTable`.
 public typealias RouterBehavior = RouterTable.Value
 
-public extension Router {
+extension Router {
     /// Router table, which stores registered routing events.
     ///
     /// Most methods of this type are for internal use within RaModular and are not exposed externally.

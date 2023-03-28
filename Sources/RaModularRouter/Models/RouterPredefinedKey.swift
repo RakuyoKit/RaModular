@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension Router {
+extension Router {
     /// Some key that may be used in the process of switching view controllers.
     public enum PredefinedKey {
         /// If you want to define the way to open a view controller in the URL, please use this key.

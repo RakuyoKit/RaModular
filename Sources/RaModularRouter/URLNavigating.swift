@@ -6,7 +6,7 @@
 //  Copyright © 2023 Rakuyo. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 import RaModularCore
 
