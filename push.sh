@@ -2,6 +2,22 @@
 # Authoer: Rakuyo
 # Update Date: 2023.03.28
 
+# Need to be defined in order of dependency
+names=(
+    "RaModularCore" 
+    "RaModularBehavior" 
+    "RaModularRouter" 
+    "RaModular"
+)
+
+lint(){
+    pod lib lint $1.podspec --allow-warnings --skip-tests --include-podspecs='*.podspec'
+}
+
+publish(){
+    pod trunk push $1.podspec --allow-warnings --skip-tests --synchronous
+}
+
 release(){
     config_file="ConfigurePodspec.rb"
     version=$(grep -E "^ *version *= *'[0-9]+(\.[0-9]+)*'?" "$config_file" | sed -E "s/^ *version *= *'?(.+)'.*/\1/")
@@ -29,7 +45,21 @@ main(){
     project_path=$(cd `dirname $0` ; pwd)
     cd $project_path
 
+    for name in "${names[@]}"; do
+        lint $name
+        if [ $? -ne 0 ]; then
+            exit 1
+        fi
+    done
+
     release
+
+    for name in "${names[@]}"; do
+        publish $name
+        if [ $? -ne 0 ]; then
+            exit 1
+        fi
+    done
 }
 
 main
