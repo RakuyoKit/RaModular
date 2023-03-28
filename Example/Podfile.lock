@@ -1,17 +1,17 @@
 PODS:
   - Order (0.1.0):
-    - OrderInterface (= 0.1.0)
+    - OrderInterface
   - OrderInterface (0.1.0):
-    - RaModular (= 0.1.0)
-  - RaModular (0.1.0):
-    - RaModularBehavior (= 0.1.0)
-    - RaModularCore (= 0.1.0)
-    - RaModularRouter (= 0.1.0)
-  - RaModularBehavior (0.1.0):
-    - RaModularCore (= 0.1.0)
-  - RaModularCore (0.1.0)
-  - RaModularRouter (0.1.0):
-    - RaModularCore (= 0.1.0)
+    - RaModular
+  - RaModular (0.1.1):
+    - RaModularBehavior (= 0.1.1)
+    - RaModularCore (= 0.1.1)
+    - RaModularRouter (= 0.1.1)
+  - RaModularBehavior (0.1.1):
+    - RaModularCore (= 0.1.1)
+  - RaModularCore (0.1.1)
+  - RaModularRouter (0.1.1):
+    - RaModularCore (= 0.1.1)
 
 DEPENDENCIES:
   - Order (from `./Services/Order`)
@@ -36,12 +36,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Order: 33691516425617e16a11e6a3c46fdf9ec630d327
-  OrderInterface: 6780d6e1d353364ef11b28e5461448f9d50e18d9
-  RaModular: b5d8ccf46f14cc1c9b820fb39178e6a27124400b
-  RaModularBehavior: 5c433699537025460d17bf9cb0208f9f6d1da7c0
-  RaModularCore: 65c1707a1e4f9d3bae71d88aa201a963cbe94304
-  RaModularRouter: 76441f535870a88aae9573f3ad35c2b660d42527
+  Order: 9981cdb623baae8a355a20ede8d5315f0a4c0279
+  OrderInterface: fb1eb67456fde355c9a50ba5f5a5425332520d57
+  RaModular: 8e59f9f0d5440398a0cffb88726296f2d632f133
+  RaModularBehavior: 28164d9ffeb94dfb9065fdce9d3a24f592af1f23
+  RaModularCore: ea6cdb5432a3439fe7160476495fc0d4ca026c9a
+  RaModularRouter: 761f076446b74a37d8262d34d3fd24b82bef0050
 
 PODFILE CHECKSUM: c81bc8d578614957c5c79123d2e350e6be05a5bc
 
