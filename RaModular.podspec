@@ -1,5 +1,5 @@
 # pod lib lint RaModular.podspec --allow-warnings --skip-tests
-# pod trunk push RaModular.podspec --allow-warnings --skip-tests
+# pod trunk push RaModular.podspec --allow-warnings --skip-tests --synchronous
 
 Pod::Spec.new do |spec|
   # Update ConfigurePodspec.rb to increment the version number.
