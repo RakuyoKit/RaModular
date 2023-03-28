@@ -42,30 +42,24 @@ public protocol ServiceProviding: BehaviorProviding & RouterProviding & Lifecycl
 
 // MARK: - BehaviorProviding Default Provider
 
-public extension ServiceProviding {
-    typealias BehaviorProviderMock = ProviderMock
-    
-    func createBehaviorProvider() -> BehaviorProviderMock {
+public extension ServiceProviding {    
+    func createBehaviorProvider() -> ProviderMock {
         return createProvider()
     }
 }
 
 // MARK: - RouterProviding Default Provider
 
-public extension ServiceProviding {
-    typealias RouterProviderMock = ProviderMock
-    
-    func createRouterProvider() -> RouterProviderMock {
+public extension ServiceProviding {    
+    func createRouterProvider() -> ProviderMock {
         return createProvider()
     }
 }
 
 // MARK: - LifecycleProviding Default Provider
 
-public extension ServiceProviding {
-    typealias LifecycleProviderMock = ProviderMock
-    
-    func createLifecycleProvider() -> LifecycleProviderMock {
+public extension ServiceProviding {    
+    func createLifecycleProvider() -> ProviderMock {
         return createProvider()
     }
 }

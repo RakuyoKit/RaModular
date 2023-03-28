@@ -11,7 +11,7 @@ import Foundation
 /// Methods of transitioning between view controllers.
 public typealias RouterMode = Router.Mode
 
-public extension Router {
+extension Router {
     /// Methods of transitioning between view controllers.
     public enum Mode {
         // `show(_:, sender:)`

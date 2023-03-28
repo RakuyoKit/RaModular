@@ -9,20 +9,13 @@
 import Foundation
 
 public extension RMDExtendable where Base: Sequence {
+    @discardableResult
     func distribute<T>(_ block: (Base.Element) -> T?) -> [T] {
         return base.compactMap(block)
     }
     
     func distribute(_ block: (Base.Element) -> Bool?) -> Bool {
         return distribute(block).reduce(true) { $0 && $1 }
-    }
-    
-    func distribute(_ block: (Base.Element) -> Void) {
-        base.forEach(block)
-    }
-    
-    func distribute(_ block: (Base.Element) throws -> Void) throws {
-        try base.forEach(block)
     }
     
     @discardableResult

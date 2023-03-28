@@ -212,6 +212,7 @@ open class ModularAppDelegate: BaseLifecycleDelegate<UIApplicationDelegate>, UIA
         }
     }
     
+    @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     open func application(
         _ application: UIApplication,
         willChangeStatusBarOrientation newStatusBarOrientation: UIInterfaceOrientation,
@@ -222,6 +223,7 @@ open class ModularAppDelegate: BaseLifecycleDelegate<UIApplicationDelegate>, UIA
         }
     }
     
+    @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     open func application(
         _ application: UIApplication,
         didChangeStatusBarOrientation oldStatusBarOrientation: UIInterfaceOrientation
@@ -231,12 +233,14 @@ open class ModularAppDelegate: BaseLifecycleDelegate<UIApplicationDelegate>, UIA
         }
     }
     
+    @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     open func application(_ application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
         delegateServices.rmd.distribute {
             $0.application?(application, willChangeStatusBarFrame: newStatusBarFrame)
         }
     }
     
+    @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     open func application(_ application: UIApplication, didChangeStatusBarFrame oldStatusBarFrame: CGRect) {
         delegateServices.rmd.distribute {
             $0.application?(application, didChangeStatusBarFrame: oldStatusBarFrame)

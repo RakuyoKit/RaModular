@@ -17,6 +17,6 @@ def configure(spec:, name:, local_deps: [])
   spec.swift_versions = ['5.5']
 
   local_deps.each do |dep|
-    spec.dependency dep, version
+    spec.dependency dep
   end
 end
