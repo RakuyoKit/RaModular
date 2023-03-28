@@ -2,17 +2,6 @@
 # Authoer: Rakuyo
 # Update Date: 2023.03.28
 
-project_path=$(cd `dirname $0` ; pwd)
-cd $project_path
-
-# Need to be defined in order of dependency
-names=(
-    "RaModularCore" 
-    "RaModularBehavior" 
-    "RaModularRouter" 
-    "RaModular"
-)
-
 release(){
     config_file="ConfigurePodspec.rb"
     version=$(grep -E "^ *version *= *'[0-9]+(\.[0-9]+)*'?" "$config_file" | sed -E "s/^ *version *= *'?(.+)'.*/\1/")
@@ -36,17 +25,11 @@ release(){
     git branch -d $release_branch
 }
 
-lintLib(){
-    pod lib lint $1.podspec --allow-warnings --skip-tests
+main(){
+    project_path=$(cd `dirname $0` ; pwd)
+    cd $project_path
+
+    release
 }
 
-publish(){
-    pod trunk push $1.podspec --allow-warnings --skip-tests
-    pod repo update
-}
-
-release
-
-for name in "${names[@]}"; do
-  lintLib $name && publish $name 
-done
+main
